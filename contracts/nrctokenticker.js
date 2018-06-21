@@ -308,6 +308,8 @@ var NRCTokenTicker = function () {
         _name: null,
         _symbol: null,
         _decimals: null,
+        _admin: null,
+        _newAdmin: null,
         _totalSupply: {
             parse: function (value) {
                 return new BigNumber(value);
@@ -359,9 +361,7 @@ var NRCTokenTicker = function () {
             stringify: function (o) {
                 return o.toString();
             }
-        },
-        _admin: '',
-        _newAdmin: ''
+        }
     });
 
     LocalContractStorage.defineMapProperties(this, {
