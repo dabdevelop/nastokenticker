@@ -303,7 +303,7 @@ Popularity.prototype = {
     }
 };
 
-var NRCTokenTicker = function () {
+var NASTokenTicker = function () {
     LocalContractStorage.defineProperties(this, {
         _name: null,
         _symbol: null,
@@ -456,7 +456,7 @@ var NRCTokenTicker = function () {
     });
 };
 
-NRCTokenTicker.prototype = {
+NASTokenTicker.prototype = {
     init: function () {
         this._name = 'NRCTickerToken';
         this._symbol = "NTT";
@@ -1696,4 +1696,4 @@ NRCTokenTicker.prototype = {
     }
 };
 
-module.exports = NRCTokenTicker;
+module.exports = NASTokenTicker;
