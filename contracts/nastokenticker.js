@@ -1130,7 +1130,7 @@ NASTokenTicker.prototype = {
             this.popular.set(from, popular);
 
             token.popularity = token.popularity.plus(deposit);
-            if(token.popularity.gte(token.auth)){
+            if(token.popularity.gte(token.auth) && token.auth.gte(new BigNumber(10).pow(22))){
                 token.popular = true;
                 if(token.popularId.lt(0)){
                     token.popularId = this._popularTokenNum;
@@ -1152,7 +1152,7 @@ NASTokenTicker.prototype = {
             popular.set(address, newPopular);
             this.popular.set(from, popular);
             token.popularity = token.popularity.minus(withdraw);
-            if(token.popularity.gte(token.auth)){
+            if(token.popularity.gte(token.auth) && token.auth.gte(new BigNumber(10).pow(22))){
                 token.popular = true;
                 if(token.popularId.lt(0)){
                     token.popularId = this._popularTokenNum;
