@@ -1194,6 +1194,63 @@
         $("#token").html('转账');
       }
 
+      function auth(){
+        if (checkNASWallet()) {
+          var amount = $("#authAmount").val();
+          // TODO get decimals from token info
+          var decimals = 18;
+          amount = new BigNumber(amount).mul(new BigNumber(10).pow(decimals));
+
+          if(amount < 0){
+            toastBot.showToast('warning', "您输入的数量, 请重新输入!");
+            return;
+          }
+
+          $("#form-auth").modal('hide');
+          var fun = 'authorize';
+          var args = [];
+          args.push(selectedToken);
+          args.push(amount);
+          callNebPay(fun, args, 0, function (resp) {
+            localStorage.setItem('address', resp.from);
+            var wait;
+            function clearWait() {
+              clearInterval(wait);
+              refresh();
+            }
+            wait = setInterval(clearWait, 2000);
+          }, selectedToken);
+        }
+      }
+
+      function pop(){
+        if (checkNASWallet()) {
+          var amount = $("#popAmount").val();
+          // TODO get decimals from token info
+          var decimals = 18;
+          amount = new BigNumber(amount).mul(new BigNumber(10).pow(decimals));
+
+          if(amount < 0){
+            toastBot.showToast('warning', "您输入的数量, 请重新输入!");
+            return;
+          }
+
+          $("#form-pop").modal('hide');
+          var fun = 'popularize';
+          var args = [];
+          args.push(selectedToken);
+          args.push(amount);
+          callNebPay(fun, args, 0, function (resp) {
+            localStorage.setItem('address', resp.from);
+            var wait;
+            function clearWait() {
+              clearInterval(wait);
+              refresh();
+            }
+            wait = setInterval(clearWait, 2000);
+          }, selectedToken);
+        }
+      }
 
 
       function transfer(){
