@@ -523,19 +523,19 @@
                           <div class="row text-center">
                             <div class="col">
                               <div class="metric">
-                                <h6 class="metric-value">0</h6>
+                                <h6 class="metric-value" id="authToken0">0</h6>
                                 <p class="metric-label">站台</p>
                               </div>
                             </div>
                             <div class="col">
                               <div class="metric">
-                                <h6 class="metric-value">0</h6>
+                                <h6 class="metric-value" id="popToken0">0</h6>
                                 <p class="metric-label">支持</p>
                               </div>
                             </div>
                             <div class="col">
                               <div class="metric">
-                                <h6 class="metric-value">0</h6>
+                                <h6 class="metric-value" id="balanceToken0">0</h6>
                                 <p class="metric-label">余额</p>
                               </div>
                             </div>
@@ -568,19 +568,19 @@
                           <div class="row text-center">
                             <div class="col">
                               <div class="metric">
-                                <h6 class="metric-value">0</h6>
+                                <h6 class="metric-value" id="authToken1">0</h6>
                                 <p class="metric-label">站台</p>
                               </div>
                             </div>
                             <div class="col">
                               <div class="metric">
-                                <h6 class="metric-value">0</h6>
+                                <h6 class="metric-value" id="popToken1">0</h6>
                                 <p class="metric-label">支持</p>
                               </div>
                             </div>
                             <div class="col">
                               <div class="metric">
-                                <h6 class="metric-value">0</h6>
+                                <h6 class="metric-value" id="balanceToken1">0</h6>
                                 <p class="metric-label">余额</p>
                               </div>
                             </div>
@@ -772,7 +772,7 @@
           "function": fun,
           "args": JSON.stringify(args)
         };
-        console.log(params.from.getAddressString() + ' call ' + params.to + ' @ ' + fun + ": " + JSON.stringify(args) + ' with value: ' + value);
+//        console.log(params.from.getAddressString() + ' call ' + params.to + ' @ ' + fun + ": " + JSON.stringify(args) + ' with value: ' + value);
         callback(params);
       }
 
@@ -785,9 +785,7 @@
       function refresh(){
         toastBot.showToast('info', "交易数据将在几秒内自动更新");
         address = localStorage.getItem('address') || '';
-        closeTransfer();
-        checkWallet();
-        loadHolderAccount();
+        load();
       }
 
 
@@ -978,7 +976,6 @@
                       innerCall(fun, args, 0, function(params){
                         neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
                           var result = resp.result;
-                          console.log(result);
                           if(result === 'null' || result === '""'){
                             return;
                           }
@@ -1033,9 +1030,6 @@
         }, "*");
       }
 
-      var tokens = [];
-
-
       function loadHolderNum(){
         var fun = 'holderNum';
         var args = [];
@@ -1082,11 +1076,12 @@
         });
       }
 
-      function loadTokens(){
-        var fun = 'getTokens';
+      var tokenBalances = {};
+
+      function loadHolderTokenBalance(tokenId){
+        var fun = 'balanceOf';
         var args = [];
-        args.push(0);
-        args.push(2);
+        args.push(address);
         innerCall(fun, args, 0, function(params){
           neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
             var result = resp.result;
@@ -1094,10 +1089,34 @@
               return;
             }
             try{
-              var _tokens = JSON.parse(result);
-              tokens.concat(_tokens);
+              var balance = JSON.parse(result);
+              $("#balanceToken" + tokenId).html(Unit.fromBasic(balance).toFixed(2));
+              tokenBalances[tokens[tokenId]] = Unit.fromBasic(balance).toFixed(2);
+            }catch (err){
+              //result is the error message
+              console.log("error:" + err.message)
+            }
+          }).catch(function (err) {
+            console.log("error:" + err.message)
+          });
 
-              console.log(tokens);
+        }, tokens[tokenId]);
+      }
+
+      function loadToken(tokenId){
+        var fun = 'getToken';
+        var args = [];
+        args.push(tokens[tokenId]);
+        innerCall(fun, args, 0, function(params){
+          neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
+            var result = resp.result;
+            if(result === 'null' || result === '""'){
+              return;
+            }
+            try{
+              var token = JSON.parse(result);
+              $("#authToken" + tokenId).html(Unit.fromBasic(token.auth).toFixed(2));
+              $("#popToken" + tokenId).html(Unit.fromBasic(token.popularity).toFixed(2));
             }catch (err){
               //result is the error message
               console.log("error:" + err.message)
@@ -1107,6 +1126,14 @@
           });
 
         });
+      }
+
+      var tokens = ['n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt', 'n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr'];
+      function loadTokens(){
+        for(var i in tokens){
+          loadToken(i);
+          loadHolderTokenBalance(i);
+        }
       }
 
       function closeAuth(){
@@ -1277,15 +1304,18 @@
       function transfer(){
         if (checkNASWallet()) {
           var receiver = $("#receiverAccount").val();
-          var amount = $("#transferAmount").val();
-          // TODO get decimals from token info
-          var decimals = 18;
-          amount = new BigNumber(amount).mul(new BigNumber(10).pow(decimals));
-
+          var amount = parseFloat($("#transferAmount").val());
           if(amount < 0){
             toastBot.showToast('warning', "您输入的数量有误, 请重新输入!");
             return;
           }
+          if(amount > parseFloat(tokenBalances[selectedToken])){
+            toastBot.showToast('warning', "您的最大转账数量为: " + tokenBalances[selectedToken]);
+            return;
+          }
+          // TODO get decimals from token info
+          var decimals = 18;
+          amount = new BigNumber(amount).mul(new BigNumber(10).pow(decimals));
           if(!Account.isValidAddress(receiver) && !useAlais){
             toastBot.showToast('warning', "您输入的账户地址有误, 请重新输入!");
             return;
@@ -1340,7 +1370,6 @@
               var address = JSON.parse(result);
               useAlais = true;
               $("#alias").html(address);
-              console.log(address);
             }catch (err){
               //result is the error message
               console.log("error:" + err.message)
@@ -1488,7 +1517,6 @@
   <script>
     $("#receiverAccount").on('input', function (e) {
       var receiver = $("#receiverAccount").val();
-      console.log(receiver);
       if(!Account.isValidAddress(receiver) && validateAlias(receiver)){
         $("#alias").html('');
         useAlais = false;
