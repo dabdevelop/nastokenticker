@@ -1199,7 +1199,7 @@
           var amount = $("#authAmount").val();
           // TODO get decimals from token info
           var decimals = 18;
-          amount = new BigNumber(amount).mul(new BigNumber(10).pow(decimals));
+          amount = new BigNumber(amount);
 
           if(amount < 0){
             toastBot.showToast('warning', "您输入的数量, 请重新输入!");
@@ -1228,7 +1228,7 @@
           var amount = $("#popAmount").val();
           // TODO get decimals from token info
           var decimals = 18;
-          amount = new BigNumber(amount).mul(new BigNumber(10).pow(decimals));
+          amount = new BigNumber(amount);
 
           if(amount < 0){
             toastBot.showToast('warning', "您输入的数量, 请重新输入!");
