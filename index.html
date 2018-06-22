@@ -1104,17 +1104,20 @@
           });
 
         });
-
       }
 
       function closeAuth(){
         selectedToken = '';
         $("#authAccount").val('');
+        $("#authAmount").val('');
+        $("#confirmAuth").attr('disabled', true);
       }
 
       function closePop(){
         selectedToken = '';
         $("#popAccount").val('');
+        $("#popAmount").val('');
+        $("#confirmPop").attr('disabled', true);
       }
 
       function closeTransfer(){
@@ -1129,12 +1132,60 @@
         selectedToken = address;
         $("#form-auth").modal('show');
         $("#token").html('站台');
+
+        var fun = 'authority';
+        var args = [];
+        args.push(address);
+        args.push(selectedToken);
+        innerCall(fun, args, 0, function(params){
+          neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
+            var result = resp.result;
+            if(result === 'null' || result === '""'){
+              return;
+            }
+            try{
+              var authority = JSON.parse(result);
+              $("#authAmount").val(authority);
+              $("#confirmAuth").attr('disabled', false);
+            }catch (err){
+              //result is the error message
+              console.log("error:" + err.message)
+            }
+          }).catch(function (err) {
+            console.log("error:" + err.message)
+          });
+
+        });
+
       }
 
       function popDialog(address){
         selectedToken = address;
         $("#form-pop").modal('show');
         $("#token").html('站台');
+        var fun = 'popularity';
+        var args = [];
+        args.push(address);
+        args.push(selectedToken);
+        innerCall(fun, args, 0, function(params){
+          neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
+            var result = resp.result;
+            if(result === 'null' || result === '""'){
+              return;
+            }
+            try{
+              var popularity = JSON.parse(result);
+              $("#popAmount").val(popularity);
+              $("#confirmPop").attr('disabled', false);
+            }catch (err){
+              //result is the error message
+              console.log("error:" + err.message)
+            }
+          }).catch(function (err) {
+            console.log("error:" + err.message)
+          });
+
+        });
       }
 
       function transferDialog(address){
@@ -1285,7 +1336,7 @@
         <div class="modal-footer"  style="padding-top: 10px">
           <br>
           <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeAuth()">关闭</button>
-          <button type="button" class="btn btn-primary" onclick="auth()" disabled="disabled">确定</button>
+          <button type="button" class="btn btn-primary" onclick="auth()" disabled="disabled" id="confirmAuth">确定</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -1304,7 +1355,7 @@
         <div class="modal-footer"  style="padding-top: 10px">
           <br>
           <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closePop()">关闭</button>
-          <button type="button" class="btn btn-primary" onclick="pop()" disabled="disabled">确定</button>
+          <button type="button" class="btn btn-primary" onclick="pop()" disabled="disabled" id="confirmPop">确定</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
