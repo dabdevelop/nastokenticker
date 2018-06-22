@@ -1128,8 +1128,8 @@
 
       var selectedToken = '';
 
-      function authDialog(address){
-        selectedToken = address;
+      function authDialog(_address){
+        selectedToken = _address;
         $("#form-auth").modal('show');
         $("#token").html('站台');
 
@@ -1145,7 +1145,7 @@
             }
             try{
               var authority = JSON.parse(result);
-              $("#authAmount").val(authority);
+              $("#authAmount").val(Unit.fromBasic(authority).toFixed(6));
               $("#confirmAuth").attr('disabled', false);
             }catch (err){
               //result is the error message
@@ -1159,8 +1159,8 @@
 
       }
 
-      function popDialog(address){
-        selectedToken = address;
+      function popDialog(_address){
+        selectedToken = _address;
         $("#form-pop").modal('show');
         $("#token").html('站台');
         var fun = 'popularity';
@@ -1175,7 +1175,7 @@
             }
             try{
               var popularity = JSON.parse(result);
-              $("#popAmount").val(popularity);
+              $("#popAmount").val(Unit.fromBasic(popularity).toFixed(6));
               $("#confirmPop").attr('disabled', false);
             }catch (err){
               //result is the error message
@@ -1188,8 +1188,8 @@
         });
       }
 
-      function transferDialog(address){
-        selectedToken = address;
+      function transferDialog(_address){
+        selectedToken = _address;
         $("#form-transfer").modal('show');
         $("#token").html('转账');
       }
