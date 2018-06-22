@@ -13,13 +13,13 @@ var BigNumber = require('bignumber.js');
 
 var neb = new Nebulas.Neb();
 //neb.setRequest(new Nebulas.HttpRequest("http://localhost:8685"));
-//neb.setRequest(new Nebulas.HttpRequest("https://mainnet.nebulas.io"));
-neb.setRequest(new Nebulas.HttpRequest("https://testnet.nebulas.io"));
-//var chainID = 1;
-var chainID = 1001;
+neb.setRequest(new Nebulas.HttpRequest("https://mainnet.nebulas.io"));
+//neb.setRequest(new Nebulas.HttpRequest("https://testnet.nebulas.io"));
+var chainID = 1;
+//var chainID = 1001;
 
 // n1aedmxzq8XBb3TUgPE6ms556h5ymCkrtu2
-var sourceAccount = new Account("dbafc4ed12085345ac5f0ad24959c94e421b6c9e27e7de5a2ed1b4072c9f9684");
+var sourceAccount = new Account("4aaf873707f925a286a89e74cd809cbaff3ddb325ea40338e2d96c4dd2b056f4");
 
 // n1TpE5KzBX3gjJgEEAuoRTF68F6FHzxBdgh
 //var sourceAccount = new Account("badfe9a04d91b2656ca5ea22d70b05f2df07929ddebb788e6870b5a155665611");
@@ -31,7 +31,7 @@ var globalParams = {
 
 var players = [];
 
-var contract = 'n1zNr21Y4jzFGgeYnAe5aXjfTHq1cNxjUex';
+var contract = 'n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr';
 //var contract = 'n235Bs9WMYYQAuo7w3F8XrhX5DCtWbSQ6cY';
 //console.log(sourceAccount.getAddressString());
 
@@ -40,7 +40,7 @@ var contract = 'n1zNr21Y4jzFGgeYnAe5aXjfTHq1cNxjUex';
 var batch = false;
 var usePlayer = false;
 
-deploy();
+//deploy();
 
 //testLogin();
 
@@ -55,8 +55,8 @@ deploy();
 
 //testSubmitToken("n1aedmxzq8XBb3TUgPE6ms556h5ymCkrtu2", 20);
 
-//testSubmitTokenRaw("n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", 20, 'CapitalGameToken', "CGT", 18, 1000000);
-//testSubmitTokenRaw("n1xjLawUUw3A5bwgkQYvhCkbVPztKCEawvD", 20, 'CapitalGameToken', "CGT", 18, 200000);
+//testSubmitTokenRaw("n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", 20, 'CapitalGameToken', "CGT", 18, 268744.8254095);
+testSubmitTokenRaw("n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr", 20, 'NASTickerToken', "NTT", 18, 100000000);
 
 //testSubmitBalanceRaw("n1aedmxzq8XBb3TUgPE6ms556h5ymCkrtu2", "n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", 0.01);
 //testSubmitBalanceRaw("n1MMHWF3BFhhHcSbiPMJgqzL8YYRsS4M27S", "n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", 101.66);

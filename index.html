@@ -495,6 +495,9 @@
                 <div class="page-section">
                   <div class="masonry-layout">
                     <!-- .masonry-item -->
+
+
+
                     <div class="masonry-item col-lg-6">
                       <!-- .card -->
                       <section class="card card-fluid">
@@ -564,6 +567,76 @@
                       <!-- /.card -->
                     </div>
 
+                    <div class="masonry-item col-lg-6">
+                      <!-- .card -->
+                      <section class="card card-fluid">
+                        <img src="assets/images/dummy/img-8.jpg" alt="" class="card-img-top img-fluid">
+                        <!-- .card-body -->
+                        <div class="card-body pt-2">
+                          <!-- .media -->
+                          <div class="media mb-3">
+                            <!-- .user-avatar -->
+                            <a href="#" class="user-avatar user-avatar-floated user-avatar-xl float-left mr-3">
+                              <img src="assets/images/logos/cgt.png">
+                            </a>
+                            <!-- /.user-avatar -->
+                            <!-- .media-body -->
+                            <div class="media-body">
+                              <h3 class="card-title text-truncate">
+                                <a href="#">NTT</a>
+                                <i class="oi oi-star"></i>
+                              </h3>
+                              <h6 class="card-subtitle text-muted">NASTickerToken</h6>
+                            </div>
+
+                            <div class="btn-group" role="group" aria-label="操作">
+                              <button type="button" class="btn btn-sm btn-outline-primary">站台</button>
+                              <button type="button" class="btn btn-sm btn-outline-primary">支持</button>
+                              <button type="button" class="btn btn-sm btn-outline-primary" onclick="transferDialog('n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr')">转账</button>
+                            </div>
+                          </div>
+                          <!-- /.media -->
+                          <!-- grid row -->
+                          <div class="row text-center">
+                            <!-- grid column -->
+                            <div class="col">
+                              <!-- .metric -->
+                              <div class="metric">
+                                <h6 class="metric-value">10000</h6>
+                                <p class="metric-label">站台</p>
+                              </div>
+                              <!-- /.metric -->
+                            </div>
+                            <!-- /grid column -->
+                            <!-- grid column -->
+                            <div class="col">
+                              <!-- .metric -->
+                              <div class="metric">
+                                <h6 class="metric-value">11000</h6>
+                                <p class="metric-label">支持</p>
+                              </div>
+                              <!-- /.metric -->
+                            </div>
+                            <!-- /grid column -->
+                            <!-- grid column -->
+                            <div class="col">
+                              <!-- .metric -->
+                              <div class="metric">
+                                <h6 class="metric-value">200</h6>
+                                <p class="metric-label">余额</p>
+                              </div>
+                              <!-- /.metric -->
+                            </div>
+                            <!-- /grid column -->
+                          </div>
+                          <!-- /grid row -->
+                        </div>
+                        <!-- /.card-body -->
+                      </section>
+                      <!-- /.card -->
+                    </div>
+
+
                   <hr>
                   <!-- /grid row -->
                 </div>
@@ -626,13 +699,13 @@
       var Utils = Nebulas.Utils;
       var Unit = Nebulas.Unit;
 
-      var rpcURL = "https://testnet.nebulas.io";
-      var dappAddress = 'n1zNr21Y4jzFGgeYnAe5aXjfTHq1cNxjUex';
-      var chainId = 1001;
+//      var rpcURL = "https://testnet.nebulas.io";
+//      var dappAddress = 'n1zNr21Y4jzFGgeYnAe5aXjfTHq1cNxjUex';
+//      var chainId = 1001;
 //      var rpcURL = "http://localhost:8685";
-//      var rpcURL = "https://mainnet.nebulas.io";
-//      var chainId = 1;
-//      var dappAddress = 'n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt';
+      var rpcURL = "https://mainnet.nebulas.io";
+      var chainId = 1;
+      var dappAddress = 'n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr';
 
       if(chainId == 1){
         $("#contract").prop('href','https://explorer.nebulas.io/#/address/'+ dappAddress +'#/').prop('target', '_blank_');
@@ -774,7 +847,6 @@
 
       function recheckMobileTransactionReceipt(serialNumber, callback) {
         retryQueryTime --;
-
         getMobileTransactionReceipt(serialNumber, function (resp) {
           if(resp instanceof Object){
             if(retryQueryTime <= 0){
@@ -917,7 +989,6 @@
       var nasBalance = -1;
       var nttBalance = -1;
 
-
       function loadHolderAccount(){
         window.addEventListener('message', function (e) {
           if (e.data.data && !!e.data.data.account) {
@@ -998,7 +1069,6 @@
             }
           }
         });
-
         window.postMessage({
           "target": "contentscript",
           "data": {},
@@ -1006,9 +1076,41 @@
         }, "*");
       }
 
+      var tokens = [];
+
+      function loadTokens(){
+        var fun = 'getTokens';
+        var args = [];
+        args.push(0);
+        args.push(2);
+        innerCall(fun, args, 0, function(params){
+          neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
+            var result = resp.result;
+            if(result === 'null' || result === '""'){
+              return;
+            }
+            try{
+              var _tokens = JSON.parse(result);
+              tokens.concat(_tokens);
+
+              console.log(tokens);
+            }catch (err){
+              //result is the error message
+              console.log("error:" + err.message)
+            }
+          }).catch(function (err) {
+            console.log("error:" + err.message)
+          });
+
+        });
+
+      }
+
       function closeTransfer(address){
         // TODO
-
+        selectedToken = '';
+        $("#receiverAccount").val('');
+        $("#transferAmount").val('');
       }
 
       var selectedToken = '';
@@ -1016,16 +1118,14 @@
       function transferDialog(address){
         selectedToken = address;
         $("#form-transfer").modal('show');
-        $("#token").html('星星转账' + ' CGT');
+        $("#token").html('转账' + ' CGT');
       }
 
       function transfer(){
         if (checkNASWallet()) {
-
           var receiver = $("#receiverAccount").val();
           var amount = $("#transferAmount").val();
           // TODO get decimals from token info
-          // TODO validate receiver and amount
           var decimals = 18;
           amount = new BigNumber(amount).mul(new BigNumber(10).pow(decimals));
 
@@ -1037,9 +1137,7 @@
             toastBot.showToast('warning', "您输入的账户地址有误, 请重新输入!");
             return;
           }
-
           $("#form-transfer").modal('hide');
-
           var fun = 'transfer';
           var args = [];
           args.push(receiver);
@@ -1057,7 +1155,6 @@
       }
 
       function setLoginAccount(){
-
         if(Account.isValidAddress($("#loginAccountAddress").val())){
           loadHolderAccount();
           address = $("#loginAccountAddress").val();
@@ -1097,8 +1194,9 @@
       }
 
       function load(){
-        loadHolderAccount();
         checkWallet();
+        loadHolderAccount();
+        loadTokens()
       }
 
       load();
