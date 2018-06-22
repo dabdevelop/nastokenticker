@@ -1033,7 +1033,7 @@
         var fun = 'holderNum';
         var args = [];
         innerCall(fun, args, 0, function(params){
-          neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
+          neb.api.call(params.from.getAddressString(), params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
             var result = resp.result;
             if(result === 'null' || result === '""'){
               return;
@@ -1056,7 +1056,7 @@
         var fun = 'tokenNum';
         var args = [];
         innerCall(fun, args, 0, function(params){
-          neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
+          neb.api.call(params.from.getAddressString(), params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
             var result = resp.result;
             if(result === 'null' || result === '""'){
               return;
@@ -1112,7 +1112,7 @@
         var args = [];
         args.push(tokens[tokenId]);
         innerCall(fun, args, 0, function(params){
-          neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
+          neb.api.call(params.from.getAddressString(), params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
             var result = resp.result;
             if(result === 'null' || result === '""'){
               return;
