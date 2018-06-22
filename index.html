@@ -126,7 +126,7 @@
                       <span>星星转账消息</span>
                     </h6>
                     <!-- .dropdown-scroll -->
-                    <div class="dropdown-scroll has-scrollable">
+                    <div class="dropdown-scroll has-scrollable" id="message">
                       <!-- .dropdown-item -->
                       <a class="dropdown-item unread">
                         <div class="user-avatar">
@@ -149,70 +149,70 @@
                 </li>
                 <!-- /.nav-item -->
                 <!-- .nav-item -->
-                <li class="nav-item dropdown header-nav-dropdown">
-                  <a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="oi oi-grid-three-up"></span>
-                  </a>
-                  <div class="dropdown-arrow"></div>
-                  <!-- .dropdown-menu -->
-                  <div class="dropdown-menu dropdown-menu-rich dropdown-menu-right">
-                    <!-- .dropdown-sheets -->
-                    <div class="dropdown-sheets">
-                      <!-- .dropdown-sheet-item -->
-                      <div class="dropdown-sheet-item">
-                        <a class="tile-wrapper">
-                          <span class="tile tile-lg bg-indigo">
-                            <i class="oi oi-people"></i>
-                          </span>
-                          <span class="tile-peek">注册幸运用户</span>
-                        </a>
-                      </div>
-                      <!-- /.dropdown-sheet-item -->
-                      <!-- .dropdown-sheet-item -->
-                      <div class="dropdown-sheet-item">
-                        <a class="tile-wrapper">
-                          <span class="tile tile-lg bg-teal">
-                            <i class="oi oi-tags"></i>
-                          </span>
-                          <span class="tile-peek">注册星星</span>
-                        </a>
-                      </div>
-                      <!-- /.dropdown-sheet-item -->
-                      <!-- .dropdown-sheet-item -->
-                      <div class="dropdown-sheet-item">
-                        <a class="tile-wrapper">
-                          <span class="tile tile-lg bg-pink">
-                            <i class="fa fa-code"></i>
-                          </span>
-                          <span class="tile-peek">新河挖矿</span>
-                        </a>
-                      </div>
-                      <!-- /.dropdown-sheet-item -->
-                      <!-- .dropdown-sheet-item -->
-                      <div class="dropdown-sheet-item">
-                        <a class="tile-wrapper">
-                          <span class="tile tile-lg bg-yellow">
-                            <i class="oi oi-fire"></i>
-                          </span>
-                          <span class="tile-peek">超级幸运用户</span>
-                        </a>
-                      </div>
-                      <!-- /.dropdown-sheet-item -->
-                      <!-- .dropdown-sheet-item -->
-                      <div class="dropdown-sheet-item">
-                        <a class="tile-wrapper">
-                          <span class="tile tile-lg bg-cyan">
-                            <i class="oi oi-circle-check"></i>
-                          </span>
-                          <span class="tile-peek">站台星星</span>
-                        </a>
-                      </div>
-                      <!-- /.dropdown-sheet-item -->
-                    </div>
-                    <!-- .dropdown-sheets -->
-                  </div>
-                  <!-- .dropdown-menu -->
-                </li>
+                <!--<li class="nav-item dropdown header-nav-dropdown">-->
+                  <!--<a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                    <!--<span class="oi oi-grid-three-up"></span>-->
+                  <!--</a>-->
+                  <!--<div class="dropdown-arrow"></div>-->
+                  <!--&lt;!&ndash; .dropdown-menu &ndash;&gt;-->
+                  <!--<div class="dropdown-menu dropdown-menu-rich dropdown-menu-right">-->
+                    <!--&lt;!&ndash; .dropdown-sheets &ndash;&gt;-->
+                    <!--<div class="dropdown-sheets">-->
+                      <!--&lt;!&ndash; .dropdown-sheet-item &ndash;&gt;-->
+                      <!--<div class="dropdown-sheet-item">-->
+                        <!--<a class="tile-wrapper">-->
+                          <!--<span class="tile tile-lg bg-indigo">-->
+                            <!--<i class="oi oi-people"></i>-->
+                          <!--</span>-->
+                          <!--<span class="tile-peek">注册幸运用户</span>-->
+                        <!--</a>-->
+                      <!--</div>-->
+                      <!--&lt;!&ndash; /.dropdown-sheet-item &ndash;&gt;-->
+                      <!--&lt;!&ndash; .dropdown-sheet-item &ndash;&gt;-->
+                      <!--<div class="dropdown-sheet-item">-->
+                        <!--<a class="tile-wrapper">-->
+                          <!--<span class="tile tile-lg bg-teal">-->
+                            <!--<i class="oi oi-tags"></i>-->
+                          <!--</span>-->
+                          <!--<span class="tile-peek">注册星星</span>-->
+                        <!--</a>-->
+                      <!--</div>-->
+                      <!--&lt;!&ndash; /.dropdown-sheet-item &ndash;&gt;-->
+                      <!--&lt;!&ndash; .dropdown-sheet-item &ndash;&gt;-->
+                      <!--<div class="dropdown-sheet-item">-->
+                        <!--<a class="tile-wrapper">-->
+                          <!--<span class="tile tile-lg bg-pink">-->
+                            <!--<i class="fa fa-code"></i>-->
+                          <!--</span>-->
+                          <!--<span class="tile-peek">新河挖矿</span>-->
+                        <!--</a>-->
+                      <!--</div>-->
+                      <!--&lt;!&ndash; /.dropdown-sheet-item &ndash;&gt;-->
+                      <!--&lt;!&ndash; .dropdown-sheet-item &ndash;&gt;-->
+                      <!--<div class="dropdown-sheet-item">-->
+                        <!--<a class="tile-wrapper">-->
+                          <!--<span class="tile tile-lg bg-yellow">-->
+                            <!--<i class="oi oi-fire"></i>-->
+                          <!--</span>-->
+                          <!--<span class="tile-peek">超级幸运用户</span>-->
+                        <!--</a>-->
+                      <!--</div>-->
+                      <!--&lt;!&ndash; /.dropdown-sheet-item &ndash;&gt;-->
+                      <!--&lt;!&ndash; .dropdown-sheet-item &ndash;&gt;-->
+                      <!--<div class="dropdown-sheet-item">-->
+                        <!--<a class="tile-wrapper">-->
+                          <!--<span class="tile tile-lg bg-cyan">-->
+                            <!--<i class="oi oi-circle-check"></i>-->
+                          <!--</span>-->
+                          <!--<span class="tile-peek">站台星星</span>-->
+                        <!--</a>-->
+                      <!--</div>-->
+                      <!--&lt;!&ndash; /.dropdown-sheet-item &ndash;&gt;-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; .dropdown-sheets &ndash;&gt;-->
+                  <!--</div>-->
+                  <!--&lt;!&ndash; .dropdown-menu &ndash;&gt;-->
+                <!--</li>-->
                 <!-- /.nav-item -->
               </ul>
               <!-- /.nav -->
