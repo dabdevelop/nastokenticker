@@ -56,13 +56,13 @@ var usePlayer = false;
 //testSubmitToken("n1aedmxzq8XBb3TUgPE6ms556h5ymCkrtu2", 20);
 
 //testSubmitTokenRaw("n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", 20, 'CapitalGameToken', "CGT", 18, 268744.8254095);
-testSubmitTokenRaw("n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr", 20, 'NASTickerToken', "NTT", 18, 100000000);
+//testSubmitTokenRaw("n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr", 20, 'NASTickerToken', "NTT", 18, 100000000);
 
 //testSubmitBalanceRaw("n1aedmxzq8XBb3TUgPE6ms556h5ymCkrtu2", "n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", 0.01);
 //testSubmitBalanceRaw("n1MMHWF3BFhhHcSbiPMJgqzL8YYRsS4M27S", "n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", 101.66);
 //testSubmitBalanceRaw("n1xjLawUUw3A5bwgkQYvhCkbVPztKCEawvD", "n1xjLawUUw3A5bwgkQYvhCkbVPztKCEawvD", 2);
 
-//testUpdateTokenPrice("n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", {NAS: 0.0297, CNY: 1.047, USD: 0.162});
+testUpdateTokenPrice("n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", {NAS: 0.02471});
 
 
 //testSetToken("n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", "", true, {website: 'https://cgplayerone.com/', email: 'ft.nudt@gmail.com'}, {});
