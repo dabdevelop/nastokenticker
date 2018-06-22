@@ -37,7 +37,7 @@
     <meta name="theme-color" content="#3063A0">
     <!-- End FAVICONS -->
 
-    <script src="assets/vendor/pace/pace.min.js"></script>>
+    <script src="assets/vendor/pace/pace.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/nebulas@0.5.0/dist/nebulas.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/nebulasio/nebPay@60c65f8a7e26015bb31c56d56f3a638a33ea3c8e/dist/nebPay.min.js"></script>
@@ -517,7 +517,7 @@
                                 <a href="#">CGT</a>
                                 <i class="oi oi-star"></i>
                               </h3>
-                              <h6 class="card-subtitle text-muted">CapitalGameToken</h6>
+                              <h6 class="card-subtitle text-muted">CapitalGame</h6>
                             </div>
 
                             <div class="btn-group" role="group" aria-label="操作">
@@ -586,7 +586,7 @@
                                 <a href="#">NTT</a>
                                 <i class="oi oi-star"></i>
                               </h3>
-                              <h6 class="card-subtitle text-muted">NASTickerToken</h6>
+                              <h6 class="card-subtitle text-muted">NASTicker</h6>
                             </div>
 
                             <div class="btn-group" role="group" aria-label="操作">
@@ -832,6 +832,7 @@
       function refresh(){
         toastBot.showToast('info', "交易数据将在几秒内自动更新");
         address = localStorage.getItem('address') || '';
+        closeTransfer();
         checkWallet();
         loadHolderAccount();
       }
@@ -1106,7 +1107,7 @@
 
       }
 
-      function closeTransfer(address){
+      function closeTransfer(){
         // TODO
         selectedToken = '';
         $("#receiverAccount").val('');
