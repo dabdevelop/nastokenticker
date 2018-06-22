@@ -432,7 +432,7 @@
                               <sub>
                                 <i class="oi oi-people"></i>
                               </sub>
-                              <span class="value">0</span>
+                              <span class="value" id="holderNum">0</span>
                             </p>
                           </div>
                           <!-- /.metric -->
@@ -447,7 +447,7 @@
                               <sub>
                                 <i class="oi oi-book"></i>
                               </sub>
-                              <span class="value">0</span>
+                              <span class="value" id="tokenNum">0</span>
                             </p>
                           </div>
                           <!-- /.metric -->
@@ -462,7 +462,7 @@
                               <sub>
                                 <i class="fa fa-bookmark"></i>
                               </sub>
-                              <span class="value">0</span>
+                              <span class="value" id="ownToken">0</span>
                             </p>
                           </div>
                           <!-- /.metric -->
@@ -482,7 +482,7 @@
                           <sub>
                             <i class="oi oi-timer"></i>
                           </sub>
-                          <span class="value">0</span>
+                          <span class="value" id="capital">0</span>
                         </p>
                       </div>
                       <!-- /.metric -->
@@ -512,8 +512,8 @@
                             </div>
 
                             <div class="btn-group" role="group" aria-label="操作">
-                              <button type="button" class="btn btn-xs btn-outline-primary">站台</button>
-                              <button type="button" class="btn btn-xs btn-outline-primary">支持</button>
+                              <button type="button" class="btn btn-xs btn-outline-primary" onclick="authDialog('n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt')">站台</button>
+                              <button type="button" class="btn btn-xs btn-outline-primary" onclick="popDialog('n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt')">支持</button>
                               <button type="button" class="btn btn-xs btn-outline-primary" onclick="transferDialog('n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt')">转账</button>
                             </div>
                           </div>
@@ -557,8 +557,8 @@
                               <h6 class="card-subtitle text-muted">NASTicker</h6>
                             </div>
                             <div class="btn-group" role="group" aria-label="操作">
-                              <button type="button" class="btn btn-xs btn-outline-primary">站台</button>
-                              <button type="button" class="btn btn-xs btn-outline-primary">支持</button>
+                              <button type="button" class="btn btn-xs btn-outline-primary" onclick="authDialog('n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr')">站台</button>
+                              <button type="button" class="btn btn-xs btn-outline-primary" onclick="popDialog('n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr')">支持</button>
                               <button type="button" class="btn btn-xs btn-outline-primary" onclick="transferDialog('n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr')">转账</button>
                             </div>
                           </div>
@@ -986,6 +986,9 @@
                               if(holder.holderId >= 0){
                                 $(".avatarImg").prop('src', "assets/images/avatars/uifaces" + holder.holderId % 20 + ".jpg");
                                 $(".user-name").html('幸运用户 #' + holder.holderId);
+                                $("#ownToken").html(holder.tokens.length);
+                                //TODO calculate captital
+                                $("#capital").html(0);
                               } else{
                                 $(".avatarImg").prop('src', "assets/images/avatars/uifaces0.jpg");
                                 $(".user-name").html('新幸运用户');
@@ -1029,6 +1032,53 @@
 
       var tokens = [];
 
+
+      function loadHolderNum(){
+        var fun = 'holderNum';
+        var args = [];
+        innerCall(fun, args, 0, function(params){
+          neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
+            var result = resp.result;
+            if(result === 'null' || result === '""'){
+              return;
+            }
+            try{
+                var holderNum = JSON.parse(result);
+                $("#holderNum").html(holderNum);
+            }catch (err){
+              //result is the error message
+              console.log("error:" + err.message)
+            }
+          }).catch(function (err) {
+            console.log("error:" + err.message)
+          });
+
+        });
+      }
+
+      function loadTokenNum(){
+        var fun = 'tokenNum';
+        var args = [];
+        innerCall(fun, args, 0, function(params){
+          neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
+            var result = resp.result;
+            if(result === 'null' || result === '""'){
+              return;
+            }
+            try{
+              var tokenNum = JSON.parse(result);
+              $("#tokenNum").html(tokenNum);
+            }catch (err){
+              //result is the error message
+              console.log("error:" + err.message)
+            }
+          }).catch(function (err) {
+            console.log("error:" + err.message)
+          });
+
+        });
+      }
+
       function loadTokens(){
         var fun = 'getTokens';
         var args = [];
@@ -1057,8 +1107,17 @@
 
       }
 
+      function closeAuth(){
+        selectedToken = '';
+        $("#authAccount").val('');
+      }
+
+      function closePop(){
+        selectedToken = '';
+        $("#popAccount").val('');
+      }
+
       function closeTransfer(){
-        // TODO
         selectedToken = '';
         $("#receiverAccount").val('');
         $("#transferAmount").val('');
@@ -1066,11 +1125,25 @@
 
       var selectedToken = '';
 
+      function authDialog(address){
+        selectedToken = address;
+        $("#form-auth").modal('show');
+        $("#token").html('站台');
+      }
+
+      function popDialog(address){
+        selectedToken = address;
+        $("#form-pop").modal('show');
+        $("#token").html('站台');
+      }
+
       function transferDialog(address){
         selectedToken = address;
         $("#form-transfer").modal('show');
         $("#token").html('转账');
       }
+
+
 
       function transfer(){
         if (checkNASWallet()) {
@@ -1147,7 +1220,9 @@
       function load(){
         checkWallet();
         loadHolderAccount();
-        loadTokens()
+        loadTokens();
+        loadHolderNum();
+        loadTokenNum();
       }
 
       load();
@@ -1192,6 +1267,44 @@
           <br>
           <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeTransfer()">关闭</button>
           <button type="button" class="btn btn-primary" onclick="transfer()">确定</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <div id="form-auth" class="modal fade colored-header colored-header-primary" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">站台</h4>
+        </div>
+        <div class="modal-body">
+          <label>数量</label>
+          <input type="number" class="form-control input-sm" id="authAmount">
+        </div>
+        <div class="modal-footer"  style="padding-top: 10px">
+          <br>
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeAuth()">关闭</button>
+          <button type="button" class="btn btn-primary" onclick="auth()" disabled="disabled">确定</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <div id="form-pop" class="modal fade colored-header colored-header-primary" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">支持</h4>
+        </div>
+        <div class="modal-body">
+          <label>数量</label>
+          <input type="number" class="form-control input-sm" id="popAmount">
+        </div>
+        <div class="modal-footer"  style="padding-top: 10px">
+          <br>
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closePop()">关闭</button>
+          <button type="button" class="btn btn-primary" onclick="pop()" disabled="disabled">确定</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
