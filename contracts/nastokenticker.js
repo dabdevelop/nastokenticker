@@ -352,7 +352,7 @@ var NASTokenTicker = function () {
         },
         _contractCallEnabled:{
             parse: function (value) {
-                if(value == 0 || value === 'false'){
+                if(value == 0 || value === 'false' || value == false){
                     return false;
                 } else{
                     return true;
@@ -1243,8 +1243,7 @@ NASTokenTicker.prototype = {
         var balanceHolder = this.balances.get(account) || new BigNumber(0);
         var holder = this.holders.get(account);
         if(!(holder instanceof Holder)){
-            this.login();
-            holder = this.holders.get(account);
+            holder = this.login();
         }
         if(balanceHolder.gte(bountyAMonth)){
             holder.bounty = bountyAMonth.div(BLOCK_A_MONTH).floor();
@@ -1323,19 +1322,19 @@ NASTokenTicker.prototype = {
     },
 
     tokenNum: function(){
-        return this._tokenNum;
+        return this._tokenNum.toString(10);
     },
 
     holderNum: function(){
-        return this._holderNum;
+        return this._holderNum.toString(10);
     },
 
     popularTokenNum: function(){
-        return this._popularTokenNum;
+        return this._popularTokenNum.toString(10);
     },
 
     vipHolderNum: function(){
-        return this._vipHolderNum;
+        return this._vipHolderNum.toString(10);
     },
 
     getToken: function(_address){
