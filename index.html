@@ -368,10 +368,10 @@
                   <!-- child menu -->
                   <ul class="menu">
                     <li class="menu-item">
-                      <a href="https://nebulas.io" target="_blank" class="menu-link">星图官方网站</a>
+                      <a href="https://nebulas.io" target="_blank" class="menu-link">星云官方网站</a>
                     </li>
                     <li class="menu-item">
-                      <a href="https://explorer.nebulas.io/#/" target="_blank" class="menu-link">星图区块浏览器</a>
+                      <a href="https://explorer.nebulas.io/#/" target="_blank" class="menu-link">星云区块浏览器</a>
                     </li>
                     <li class="menu-item">
                       <a href="https://github.com/nebulasio/WebExtensionWallet" target="_blank" class="menu-link">浏览器插件钱包</a>
@@ -685,7 +685,7 @@
               disableCheckNASWallet();
               return true;
             } else{
-              toastBot.showToast('warning', "未检测到星图钱包插件, 请安装星图钱包插件!");
+              toastBot.showToast('warning', "未检测到星云钱包插件, 请安装星云钱包插件!");
             }
             return false;
           });
@@ -928,12 +928,12 @@
                 $(".network-state").removeClass('badge-success').addClass('badge-warning').html('请安装NAS nano');
               }
             } else{
-              $(".network-state").removeClass('badge-success').addClass('badge-warning').html('未检测到星图插件钱包');
+              $(".network-state").removeClass('badge-success').addClass('badge-warning').html('未检测到星云插件钱包');
             }
           });
           return false;
         }
-        $(".network-state").html('已安装星图插件钱包');
+        $(".network-state").html('已安装星云插件钱包');
         return true;
       }
 
@@ -991,11 +991,11 @@
 //                                $("#capital").html(0);
                               } else{
                                 $(".avatarImg").prop('src', "assets/images/avatars/uifaces0.jpg");
-                                $(".user-name").html('新星图用户');
+                                $(".user-name").html('新用户');
                               }
 
                             } else {
-                              $(".user-name").html('新星图用户');
+                              $(".user-name").html('新用户');
                             }
                           }catch (err){
                             //result is the error message
@@ -1395,7 +1395,7 @@
           address = $("#loginAccountAddress").val();
           localStorage.setItem('address', address);
           $("#form-login").modal('hide');
-          toastBot.showToast('success', "您的星图账户登陆成功!");
+          toastBot.showToast('success', "您的账户登陆成功!");
         } else{
           toastBot.showToast('warning', "您输入的账户地址有误, 请重新输入!");
         }
@@ -1493,7 +1493,7 @@
         </div>
         <div class="modal-body">
           <label>接收地址</label><span class="badge badge-pill badge-light" id="alias"></span>
-          <input type="text" class="form-control input-sm" id="receiverAccount" placeholder="星图地址或nas.me代号">
+          <input type="text" class="form-control input-sm" id="receiverAccount" placeholder="星云地址或nas.me代号">
           <label>数量</label>
           <input type="number" class="form-control input-sm" id="transferAmount">
         </div>
