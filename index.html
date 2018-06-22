@@ -986,7 +986,6 @@
                               if(holder.holderId >= 0){
                                 $(".avatarImg").prop('src', "assets/images/avatars/uifaces" + holder.holderId % 20 + ".jpg");
                                 $(".user-name").html('幸运用户 #' + holder.holderId);
-                                $("#ownToken").html(holder.tokens.length);
                                 //TODO calculate captital
                                 $("#capital").html(0);
                               } else{
@@ -1092,6 +1091,11 @@
               var balance = JSON.parse(result);
               $("#balanceToken" + tokenId).html(Unit.fromBasic(balance).toFixed(2));
               tokenBalances[tokens[tokenId]] = Unit.fromBasic(balance).toFixed(2);
+              var holdNum = 0;
+              for(var i in tokenBalances){
+                holdNum += tokenBalances[i] > 0 ? 1:0;
+              }
+              $("#ownToken").html(holdNum);
             }catch (err){
               //result is the error message
               console.log("error:" + err.message)
