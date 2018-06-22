@@ -220,23 +220,23 @@
               <div class="dropdown">
                 <button class="btn-account d-none d-md-flex" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="user-avatar">
-                    <img src="assets/images/avatars/profile.jpg" alt="">
+                    <img src="assets/images/avatars/uifaces0.jpg" alt="" class="avatarImg">
                   </span>
                   <span class="account-summary pr-lg-4 d-none d-lg-block">
-                    <span class="account-name">幸运用户 #</span>
-                    <span class="account-description">星云主网在线</span>
+                    <span class="account-name user-name">幸运用户 #</span>
+                    <span class="badge badge-pill badge-success network-state"> </span>
                   </span>
                 </button>
                 <div class="dropdown-arrow dropdown-arrow-left"></div>
                 <!-- .dropdown-menu -->
                 <div class="dropdown-menu">
-                  <h6 class="dropdown-header d-none d-md-block d-lg-none"> 幸运用户 # </h6>
+                  <h6 class="dropdown-header d-none d-md-block d-lg-none user-name"> 幸运用户 # </h6>
                   <button class="dropdown-item">
-                    <span class="dropdown-icon oi oi-dollar"></span> NAS余额</button>
+                    <span class="dropdown-icon oi oi-dollar"></span> NAS余额 <b class="accountBalance"></b></button>
                   <button class="dropdown-item">
-                    <span class="dropdown-icon oi oi-dollar"></span> NTT余额</button>
+                    <span class="dropdown-icon oi oi-dollar"></span> NTT余额 <b class="accountTokenBalance"></b></button>
                   <div class="dropdown-divider"></div>
-                  <button class="dropdown-item">
+                  <button class="dropdown-item" onclick="login()">
                     <span class="dropdown-icon oi oi-account-login"></span> 登陆</button>
                 </div>
                 <!-- /.dropdown-menu -->
@@ -266,14 +266,14 @@
             <!-- .btn-account -->
             <button class="btn-account d-flex d-md-none" type="button" data-toggle="collapse" data-target="#dropdown-aside">
               <span class="user-avatar user-avatar-lg">
-                <img src="assets/images/avatars/profile.jpg" alt="">
+                <img src="assets/images/avatars/uifaces0.jpg" alt="" class="avatarImg">
               </span>
               <span class="account-icon">
                 <span class="fa fa-caret-down fa-lg"></span>
               </span>
               <span class="account-summary">
-                <span class="account-name">幸运用户 #</span>
-                <span class="account-description">星云主网在线</span>
+                <span class="account-name user-name">幸运用户 #</span>
+                <span class="badge badge-pill badge-success network-state"> </span>
               </span>
             </button>
             <!-- /.btn-account -->
@@ -282,13 +282,13 @@
               <!-- dropdown-items -->
 
               <div class="dropdown-menu">
-                <h6 class="dropdown-header d-none d-md-block d-lg-none"> 幸运用户 # </h6>
+                <h6 class="dropdown-header d-none d-md-block d-lg-none user-name"> 幸运用户 # </h6>
                 <button class="dropdown-item">
-                  <span class="dropdown-icon oi oi-dollar"></span> NAS余额</button>
+                  <span class="dropdown-icon oi oi-dollar"></span> NAS余额 <b class="accountBalance"></b></button>
                 <button class="dropdown-item">
-                  <span class="dropdown-icon oi oi-dollar"></span> NTT余额</button>
+                  <span class="dropdown-icon oi oi-dollar"></span> NTT余额 <b class="accountTokenBalance"></b></button>
                 <div class="dropdown-divider"></div>
-                <button class="dropdown-item">
+                <button class="dropdown-item" onclick="login()">
                   <span class="dropdown-icon oi oi-account-login"></span> 登陆</button>
                 <!--<a class="dropdown-item" href="layout-fullwidth.html#">Help Center</a>-->
                 <!--<a class="dropdown-item" href="layout-fullwidth.html#">Ask Forum</a>-->
@@ -297,11 +297,11 @@
 
               <div class="pb-3">
                 <a class="dropdown-item">
-                  <span class="dropdown-icon oi oi-dollar"></span> NAS余额</a>
+                  <span class="dropdown-icon oi oi-dollar"></span> NAS余额 <b class="accountBalance"></b></a>
                 <a class="dropdown-item">
-                  <span class="dropdown-icon oi oi-dollar"></span> NTT余额</a>
+                  <span class="dropdown-icon oi oi-dollar"></span> NTT余额 <b class="accountTokenBalance"></b></a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item">
+                <a class="dropdown-item" onclick="login()">
                   <span class="dropdown-icon oi oi-account-login"></span> 登陆</a>
               </div>
               <!-- /dropdown-items -->
@@ -442,7 +442,7 @@
                         <div class="col">
                           <!-- .metric -->
                           <div class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> 收录星星 </h2>
+                            <h2 class="metric-label"> 星星图谱 </h2>
                             <p class="metric-value h3">
                               <sub>
                                 <i class="oi oi-book"></i>
@@ -457,7 +457,7 @@
                         <div class="col">
                           <!-- .metric -->
                           <div class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> 订阅星星 </h2>
+                            <h2 class="metric-label"> 拥有星星 </h2>
                             <p class="metric-value h3">
                               <sub>
                                 <i class="fa fa-bookmark"></i>
@@ -505,7 +505,7 @@
                           <div class="media mb-3">
                             <!-- .user-avatar -->
                             <a href="#" class="user-avatar user-avatar-floated user-avatar-xl float-left mr-3">
-                              <img src="assets/images/logos/cgt.png" alt="User Avatar">
+                              <img src="assets/images/logos/cgt.png">
                             </a>
                             <!-- /.user-avatar -->
                             <!-- .media-body -->
@@ -520,7 +520,7 @@
                             <div class="btn-group" role="group" aria-label="操作">
                               <button type="button" class="btn btn-sm btn-outline-primary">站台</button>
                               <button type="button" class="btn btn-sm btn-outline-primary">支持</button>
-                              <button type="button" class="btn btn-sm btn-outline-primary">转账</button>
+                              <button type="button" class="btn btn-sm btn-outline-primary" onclick="transferDialog('n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt')">转账</button>
                             </div>
                           </div>
                           <!-- /.media -->
@@ -626,13 +626,13 @@
       var Utils = Nebulas.Utils;
       var Unit = Nebulas.Unit;
 
-      //      var rpcURL = "https://testnet.nebulas.io";
-      //      var dappAddress = 'n235Bs9WMYYQAuo7w3F8XrhX5DCtWbSQ6cY';
-      //      var chainId = 1001;
-      //      var rpcURL = "http://localhost:8685";
-      var rpcURL = "https://mainnet.nebulas.io";
-      var chainId = 1;
-      var dappAddress = 'n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt';
+      var rpcURL = "https://testnet.nebulas.io";
+      var dappAddress = 'n1zNr21Y4jzFGgeYnAe5aXjfTHq1cNxjUex';
+      var chainId = 1001;
+//      var rpcURL = "http://localhost:8685";
+//      var rpcURL = "https://mainnet.nebulas.io";
+//      var chainId = 1;
+//      var dappAddress = 'n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt';
 
       if(chainId == 1){
         $("#contract").prop('href','https://explorer.nebulas.io/#/address/'+ dappAddress +'#/').prop('target', '_blank_');
@@ -729,12 +729,15 @@
         }, 5000);
       }
 
-      function innerCall(fun, args, value, callback) {
+      function innerCall(fun, args, value, callback, to) {
         let params = {};
         var account = Account.NewAccount();
         account.setPrivateKey(faucets[getRandomInt(0, 100)]);
         params.from = account;
         params.to = dappAddress;
+        if(Account.isValidAddress(to)){
+          params.to = to;
+        }
         params.gasPrice = Utils.toBigNumber(1000000);
         params.gasLimit = Utils.toBigNumber(20000000);
         params.value = value;
@@ -798,7 +801,7 @@
       var nebPay = new NebPay();
       var intervalQuery;
 
-      function callNebPay(fun, args, value, callback) {
+      function callNebPay(fun, args, value, callback, to) {
 
         if(isWx){
           toastBot.showToast('error', "微信浏览器可能不支持NAS nano调用!");
@@ -886,7 +889,7 @@
 
           wait3 = setInterval(clearWait3, 18000);
 
-        });
+        }, to);
       }
 
 
@@ -895,17 +898,17 @@
           $(document).ready(function () {
             if(window.mobileAndTabletcheck()){
               if(Account.isValidAddress(address)){
-                $("#showWalletStatus").removeClass('offline').addClass('online').html('已使用NAS nano登陆');
+                $(".network-state").html('已使用NAS nano登陆');
               } else{
-                $("#showWalletStatus").removeClass('online').addClass('offline').html('请安装NAS nano');
+                $(".network-state").removeClass('badge-success').addClass('badge-warning').html('请安装NAS nano');
               }
             } else{
-              $("#showWalletStatus").removeClass('online').addClass('offline').html('未检测到星云插件钱包');
+              $(".network-state").removeClass('badge-success').addClass('badge-warning').html('未检测到星云插件钱包');
             }
           });
           return false;
         }
-        $("#showWalletStatus").removeClass('offline').addClass('online').html('已安装星云插件钱包');
+        $(".network-state").html('已安装星云插件钱包');
         return true;
       }
 
@@ -927,9 +930,8 @@
 
           if(Account.isValidAddress(address)){
             try {
-
               neb.api.getAccountState(address).then(function(accstate){
-                $("#accountBalance").html(' ' + Unit.fromBasic(accstate.balance, "nas").toFixed(2) + ' NAS');
+                $(".accountBalance").html(' ' + Unit.fromBasic(accstate.balance, "nas").toFixed(2) + ' NAS');
                 nasBalance = Unit.fromBasic(accstate.balance, "nas").toFixed(2);
                 var fun = 'balanceOf';
                 var args = [];
@@ -943,24 +945,32 @@
                     }
                     try{
                       var balance = JSON.parse(result);
-                      $("#accountTokenBalance").html(' ' + Unit.fromBasic(balance, "nas").toFixed(2) + ' CGT');
+                      $(".accountTokenBalance").html(' ' + Unit.fromBasic(balance, "nas").toFixed(2) + ' NTT');
                       nttBalance = Unit.fromBasic(balance, "nas").toFixed(2);
-                      var fun = 'player';
+                      var fun = 'getHolder';
                       var args = [];
                       args.push(address);
                       innerCall(fun, args, 0, function(params){
                         neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
                           var result = resp.result;
+                          console.log(result);
                           if(result === 'null' || result === '""'){
                             return;
                           }
+
                           try{
                             var holder = JSON.parse(result);
                             if(holder.account !== ''){
-                              $("#avatarImg").prop('src', "assets/img/avatar" + holder.holderId % 7 + ".png");
-                              $(".user-name").html('Player #' + holder.holderId);
+                              if(holder.holderId >= 0){
+                                $(".avatarImg").prop('src', "assets/images/avatars/uifaces" + holder.holderId % 20 + ".jpg");
+                                $(".user-name").html('幸运用户 #' + holder.holderId);
+                              } else{
+                                $(".avatarImg").prop('src', "assets/images/avatars/uifaces0.jpg");
+                                $(".user-name").html('新幸运用户');
+                              }
+
                             } else {
-                              $(".user-name").html('New Player');
+                              $(".user-name").html('新幸运用户');
                             }
                           }catch (err){
                             //result is the error message
@@ -986,9 +996,7 @@
             } catch (err){
               console.log(err);
             }
-
           }
-
         });
 
         window.postMessage({
@@ -998,7 +1006,89 @@
         }, "*");
       }
 
+      function closeTransfer(address){
+        // TODO
 
+      }
+
+      var selectedToken = '';
+
+      function transferDialog(address){
+        selectedToken = address;
+        $("#form-transfer").modal('show');
+        $("#token").html('星星转账' + ' CGT');
+      }
+
+      function transfer(){
+        if (checkNASWallet()) {
+
+          var receiver = $("#receiverAccount").val();
+          var amount = $("#transferAmount").val();
+          // TODO get decimals from token info
+          // TODO validate receiver and amount
+          var decimals = 18;
+          amount = new BigNumber(amount).mul(new BigNumber(10).pow(decimals));
+
+          if(amount < 0){
+            toastBot.showToast('warning', "您输入的数量, 请重新输入!");
+            return;
+          }
+          if(!Account.isValidAddress(receiver)){
+            toastBot.showToast('warning', "您输入的账户地址有误, 请重新输入!");
+            return;
+          }
+
+          $("#form-transfer").modal('hide');
+
+          var fun = 'transfer';
+          var args = [];
+          args.push(receiver);
+          args.push(amount);
+          callNebPay(fun, args, 0, function (resp) {
+            localStorage.setItem('address', resp.from);
+            var wait;
+            function clearWait() {
+              clearInterval(wait);
+              refresh();
+            }
+            wait = setInterval(clearWait, 2000);
+          }, selectedToken);
+        }
+      }
+
+      function setLoginAccount(){
+
+        if(Account.isValidAddress($("#loginAccountAddress").val())){
+          loadHolderAccount();
+          address = $("#loginAccountAddress").val();
+          localStorage.setItem('address', address);
+          $("#form-login").modal('hide');
+          toastBot.showToast('success', "您的幸运账户登陆成功!");
+        } else{
+          toastBot.showToast('warning', "您输入的账户地址有误, 请重新输入!");
+        }
+      }
+
+      function login(){
+        if(!checkWallet()){
+          $("#form-login").modal('show');
+          $("#loginAccountAddress").val(address);
+        } else {
+          if (checkNASWallet()) {
+            var fun = 'login';
+            var args = [];
+            callNebPay(fun, args, 0, function (resp) {
+              localStorage.setItem('address', resp.from);
+              var wait;
+              function clearWait() {
+                clearInterval(wait);
+                refresh();
+              }
+              wait = setInterval(clearWait, 2000);
+            });
+          }
+        }
+      }
 
       var isWx = Boolean(navigator.userAgent.match(/MicroMessenger/ig));
       if(isWx){
@@ -1006,6 +1096,56 @@
         toastBot.showToast('warning', "微信浏览器可能不支持NAS nano调用!");
       }
 
+      function load(){
+        loadHolderAccount();
+        checkWallet();
+      }
+
+      load();
+
     </script>
   </body>
+
+
+  <div id="form-login" class="modal fade colored-header colored-header-primary" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">请输入您的账户地址</h4>
+        </div>
+        <div class="modal-body">
+          <label>账户地址</label>
+          <input type="text" class="form-control input-group-sm" id="loginAccountAddress">
+        </div>
+        <div class="modal-footer"  style="padding-top: 10px">
+          <br>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" onclick="setLoginAccount()">确定</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+  <div id="form-transfer" class="modal fade colored-header colored-header-primary" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="token">星星转账</h4>
+        </div>
+        <div class="modal-body">
+          <label>接收地址</label>
+          <input type="text" class="form-control input-sm" id="receiverAccount">
+          <label>数量</label>
+          <input type="number" class="form-control input-sm" id="transferAmount">
+        </div>
+        <div class="modal-footer"  style="padding-top: 10px">
+          <br>
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeTransfer()">关闭</button>
+          <button type="button" class="btn btn-primary" onclick="transfer()">确定</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
 </html>

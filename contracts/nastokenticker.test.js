@@ -31,7 +31,7 @@ var globalParams = {
 
 var players = [];
 
-var contract = 'n1rtjQSEKSxmyQ9mpMhrTmU4xDpwavkbSUK';
+var contract = 'n1zNr21Y4jzFGgeYnAe5aXjfTHq1cNxjUex';
 //var contract = 'n235Bs9WMYYQAuo7w3F8XrhX5DCtWbSQ6cY';
 //console.log(sourceAccount.getAddressString());
 
@@ -40,7 +40,7 @@ var contract = 'n1rtjQSEKSxmyQ9mpMhrTmU4xDpwavkbSUK';
 var batch = false;
 var usePlayer = false;
 
-//deploy();
+deploy();
 
 //testLogin();
 
@@ -80,7 +80,7 @@ var usePlayer = false;
 
 //testGetHoldersByIndexArray([0, 1]);
 //testGetHoldersByAccountArray(['n1aedmxzq8XBb3TUgPE6ms556h5ymCkrtu2', 'n1xjLawUUw3A5bwgkQYvhCkbVPztKCEawvD']);
-testGetHolders(0, 2);
+//testGetHolders(0, 2);
 
 
 //tokenNum();
