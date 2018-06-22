@@ -390,6 +390,9 @@
                   <!-- child menu -->
                   <ul class="menu">
                     <li class="menu-item">
+                      <a href="https://nas.me" target="_blank" class="menu-link">地址代号NAS.ME</a>
+                    </li>
+                    <li class="menu-item">
                       <a href="https://github.com/dabdevelop/nastokenticker" target="_blank" class="menu-link">项目GitHub源码</a>
                     </li>
                     <li class="menu-item">
@@ -1124,9 +1127,13 @@
         selectedToken = '';
         $("#receiverAccount").val('');
         $("#transferAmount").val('');
+        $("#alias").html('');
       }
 
       var selectedToken = '';
+      var authOld = 0;
+      var popOld = 0;
+      var useAlais = false;
 
       function authDialog(_address){
         selectedToken = _address;
@@ -1145,7 +1152,8 @@
             }
             try{
               var authority = JSON.parse(result);
-              $("#authAmount").val(Unit.fromBasic(authority).toFixed(6));
+              authOld = Unit.fromBasic(authority).toFixed(6);
+              $("#authAmount").val(authOld);
               $("#confirmAuth").attr('disabled', false);
             }catch (err){
               //result is the error message
@@ -1175,7 +1183,8 @@
             }
             try{
               var popularity = JSON.parse(result);
-              $("#popAmount").val(Unit.fromBasic(popularity).toFixed(6));
+              popOld = Unit.fromBasic(popularity).toFixed(6);
+              $("#popAmount").val(popOld);
               $("#confirmPop").attr('disabled', false);
             }catch (err){
               //result is the error message
@@ -1202,7 +1211,12 @@
           amount = new BigNumber(amount);
 
           if(amount < 0){
-            toastBot.showToast('warning', "您输入的数量, 请重新输入!");
+            toastBot.showToast('warning', "您输入的数量有误, 请重新输入!");
+            return;
+          }
+
+          if(amount.gt(parseFloat(nttBalance) + parseFloat(authOld)) && nttBalance >= 0){
+            toastBot.showToast('warning', "您的最大站台数量为: " + (parseFloat(nttBalance) + parseFloat(authOld)));
             return;
           }
 
@@ -1211,6 +1225,7 @@
           var args = [];
           args.push(selectedToken);
           args.push(amount);
+          closeAuth();
           callNebPay(fun, args, 0, function (resp) {
             localStorage.setItem('address', resp.from);
             var wait;
@@ -1231,7 +1246,12 @@
           amount = new BigNumber(amount);
 
           if(amount < 0){
-            toastBot.showToast('warning', "您输入的数量, 请重新输入!");
+            toastBot.showToast('warning', "您输入的数量有误, 请重新输入!");
+            return;
+          }
+
+          if(amount.gt(parseFloat(nttBalance) + parseFloat(popOld)) && nttBalance >= 0){
+            toastBot.showToast('warning', "您的支持数量为: " + (parseFloat(nttBalance) + parseFloat(popOld)));
             return;
           }
 
@@ -1240,6 +1260,7 @@
           var args = [];
           args.push(selectedToken);
           args.push(amount);
+          closePop();
           callNebPay(fun, args, 0, function (resp) {
             localStorage.setItem('address', resp.from);
             var wait;
@@ -1262,18 +1283,20 @@
           amount = new BigNumber(amount).mul(new BigNumber(10).pow(decimals));
 
           if(amount < 0){
-            toastBot.showToast('warning', "您输入的数量, 请重新输入!");
+            toastBot.showToast('warning', "您输入的数量有误, 请重新输入!");
             return;
           }
-          if(!Account.isValidAddress(receiver)){
+          if(!Account.isValidAddress(receiver) && !useAlais){
             toastBot.showToast('warning', "您输入的账户地址有误, 请重新输入!");
             return;
           }
+          if(useAlais) receiver = $("#alias").html();
           $("#form-transfer").modal('hide');
           var fun = 'transfer';
           var args = [];
           args.push(receiver);
           args.push(amount);
+          closeTransfer();
           callNebPay(fun, args, 0, function (resp) {
             localStorage.setItem('address', resp.from);
             var wait;
@@ -1284,6 +1307,49 @@
             wait = setInterval(clearWait, 2000);
           }, selectedToken);
         }
+      }
+
+
+      function validateAlias(alias){
+        if (!alias || alias === "") {
+          return false;
+        }
+
+        if (alias.length > 64) {
+          return false;
+        }
+
+        if (!/^[a-zA-Z0-9_\-.]+$/.test(alias)) {
+          return false;
+        }
+        return true;
+      }
+
+      function getAlias(alias){
+        var aliasContractAddress = "n1kzpjFz4Xcn49bL8ey2RsvsaAZ1HCcEFug";
+        var fun = 'getAddressForAlias';
+        var args = [];
+        args.push(alias);
+        innerCall(fun, args, 0, function(params){
+          neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
+            var result = resp.result;
+            if(result === 'null' || result === '""'){
+              return;
+            }
+            try{
+              var address = JSON.parse(result);
+              useAlais = true;
+              $("#alias").html(address);
+              console.log(address);
+            }catch (err){
+              //result is the error message
+              console.log("error:" + err.message)
+            }
+          }).catch(function (err) {
+            console.log("error:" + err.message)
+          });
+
+        }, aliasContractAddress);
       }
 
       function setLoginAccount(){
@@ -1366,8 +1432,8 @@
           <h4 class="modal-title" id="token">星星转账</h4>
         </div>
         <div class="modal-body">
-          <label>接收地址</label>
-          <input type="text" class="form-control input-sm" id="receiverAccount">
+          <label>接收地址</label> <span class="" id="alias"></span>
+          <input type="text" class="form-control input-sm" id="receiverAccount" placeholder="星云地址或nas.me代号">
           <label>数量</label>
           <input type="number" class="form-control input-sm" id="transferAmount">
         </div>
@@ -1418,4 +1484,19 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
+
+  <script>
+    $("#receiverAccount").on('input', function (e) {
+      var receiver = $("#receiverAccount").val();
+      console.log(receiver);
+      if(!Account.isValidAddress(receiver) && validateAlias(receiver)){
+        $("#alias").html('');
+        useAlais = false;
+        getAlias(receiver);
+      }else{
+        useAlais = false;
+        $("#alias").html('')
+      }
+    });
+  </script>
 </html>
