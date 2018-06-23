@@ -1338,14 +1338,12 @@ NASTokenTicker.prototype = {
     },
 
     getToken: function(_address){
-        var token = this.tokens.get(_address) || new Token();
-        return token;
+        return this.tokens.get(_address) || new Token();
     },
 
     getTokenByIndex: function(_index){
         var address = this.token.get(_index) || '0x0';
-        var token = this.getToken(address);
-        return token;
+        return this.getToken(address);
     },
 
     getTokensByIndexArray: function(_indexArray){
@@ -1418,8 +1416,7 @@ NASTokenTicker.prototype = {
 
     getHolderByIndex: function(_index){
         var account = this.holder.get(_index) || '0x0';
-        var holder = this.getHolder(account) || new Holder();
-        return holder;
+        return this.getHolder(account);
     },
 
     getHoldersByIndexArray: function(_indexArray){
@@ -1467,8 +1464,7 @@ NASTokenTicker.prototype = {
 
     getPopularTokenByIndex: function(_index){
         var address = this.popularToken.get(_index) || '0x0';
-        var token = this.getToken(address);
-        return token;
+        return this.getToken(address);
     },
 
     getPopularTokensByIndexArray: function(_indexArray){
@@ -1505,8 +1501,7 @@ NASTokenTicker.prototype = {
 
     getVipHolderByIndex: function(_index){
         var account = this.vipHolder.get(_index) || '0x0';
-        var holder = this.getHolder(account);
-        return holder;
+        return this.getHolder(account);
     },
 
     getVipHoldersByIndexArray: function(_indexArray){
