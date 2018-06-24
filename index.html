@@ -1457,6 +1457,10 @@
       }
 
       load();
+//      var interval;
+
+
+
 
     </script>
   </body>
@@ -1541,6 +1545,24 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
+  <div id="form-lead" class="modal fade colored-header colored-header-primary" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">介绍</h4>
+        </div>
+        <div class="modal-body">
+          <p>星图——星云上最好的代币钱包。注册前1000名有星图币（NTT）糖果，按照阶梯递减的方式免费发放。为了遴选优秀的代币，星图用户可以使用星图币来站台和支持其他代币进行社区治理和社区共建。站台是权威度，支持是流行度；站台主要是项目方给自己的代币站台，支持主要是来自社区的支持。星图具有方便的代币转账功能。</p>
+
+        </div>
+        <div class="modal-footer"  style="padding-top: 10px">
+          <br>
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closePop()">关闭</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
 
   <script>
     $("#receiverAccount").on('input', function (e) {
@@ -1554,5 +1576,15 @@
         $("#alias").html('')
       }
     });
+
+    var leaded = localStorage.getItem('leaded') || "0";
+    leaded = parseInt(leaded);
+    function lead(){
+      if(!leaded){
+        localStorage.setItem('leaded', 1);
+        $("#form-lead").modal('show');
+      }
+    }
+    lead();
   </script>
 </html>
