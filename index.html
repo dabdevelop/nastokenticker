@@ -1233,19 +1233,21 @@
         selectedToken = _address;
         $("#form-transfer").modal('show');
         $("#token").html('转账');
-//        if(!leaded){
-//          leaded = 1;
-//          var input = 'orange';
-//          $("#receiverAccount").val(input);
-//          if(!Account.isValidAddress(input) && validateAlias(input)){
-//            useAlais = false;
-//            $("#alias").html('');
-//            getAlias(input);
-//          }else{
-//            useAlais = false;
-//            $("#alias").html('')
-//          }
-//        }
+        var wait;
+        var input = 'orange';
+        var i = 0;
+        function clearWait(){
+          clearInterval(wait);
+          i++;
+          $("#receiverAccount").val(input.substr(0, i));
+          getAliasAccount();
+          if(i < input.length)
+            wait = setInterval(clearWait, 200);
+        }
+        if(!leaded){
+          leaded = 1;
+          wait = setInterval(clearWait, 200);
+        }
       }
 
       function auth(){
@@ -1380,7 +1382,7 @@
         var args = [];
         args.push(alias);
         innerCall(fun, args, 0, function(params){
-          neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
+          neb.api.call(params.from.getAddressString(), params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
             var result = resp.result;
             if(result === 'null' || result === '""'){
               return;
@@ -1579,7 +1581,7 @@
 
   <script>
 
-    $("#receiverAccount").on('input', function (e) {
+    function getAliasAccount(){
       var receiver = $("#receiverAccount").val();
       if(!Account.isValidAddress(receiver) && validateAlias(receiver)){
         $("#alias").html('');
@@ -1589,11 +1591,14 @@
         useAlais = false;
         $("#alias").html('')
       }
+    }
+
+    $("#receiverAccount").on('input', function (e) {
+      getAliasAccount();
     });
 
     var leaded = localStorage.getItem('leaded') || "0";
     leaded = parseInt(leaded);
-    leaded = 0;
     function lead(){
       if(!leaded){
         localStorage.setItem('leaded', 1);
