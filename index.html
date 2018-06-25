@@ -1325,7 +1325,7 @@
         if (checkNASWallet()) {
           var receiver = $("#receiverAccount").val();
           var transferAmount = $("#transferAmount").val();
-          var amount = parseFloat();
+          var amount = parseFloat(transferAmount);
           if(amount < 0 || transferAmount === ''){
             toastBot.showToast('warning', "您输入的数量有误, 请重新输入!");
             return;
