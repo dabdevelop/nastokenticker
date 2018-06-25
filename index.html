@@ -1233,19 +1233,19 @@
         selectedToken = _address;
         $("#form-transfer").modal('show');
         $("#token").html('转账');
-        if(!leaded){
-          leaded = 1;
-          var input = 'orange';
-          $("#receiverAccount").val(input);
-          if(!Account.isValidAddress(input) && validateAlias(input)){
-            $("#alias").html('');
-            useAlais = false;
-            getAlias(input);
-          }else{
-            useAlais = false;
-            $("#alias").html('')
-          }
-        }
+//        if(!leaded){
+//          leaded = 1;
+//          var input = 'orange';
+//          $("#receiverAccount").val(input);
+//          if(!Account.isValidAddress(input) && validateAlias(input)){
+//            useAlais = false;
+//            $("#alias").html('');
+//            getAlias(input);
+//          }else{
+//            useAlais = false;
+//            $("#alias").html('')
+//          }
+//        }
       }
 
       function auth(){
@@ -1593,7 +1593,7 @@
 
     var leaded = localStorage.getItem('leaded') || "0";
     leaded = parseInt(leaded);
-//    leaded = 0;
+    leaded = 0;
     function lead(){
       if(!leaded){
         localStorage.setItem('leaded', 1);
