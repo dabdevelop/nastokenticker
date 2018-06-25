@@ -1233,16 +1233,31 @@
         selectedToken = _address;
         $("#form-transfer").modal('show');
         $("#token").html('转账');
+        var wait;
+        var input = 'orange';
+        var i = 0;
+        function clearWait(){
+          clearInterval(wait);
+          i++;
+          $("#receiverAccount").val(input.substr(0, i));
+          getAlaisAccount();
+          if(i < input.length)
+            wait = setInterval(clearWait, 200);
+        }
+        if(!leaded){
+          leaded = 1;
+          wait = setInterval(clearWait, 200);
+        }
       }
 
       function auth(){
         if (checkNASWallet()) {
-          var amount = $("#authAmount").val();
+          var authAmount = $("#authAmount").val();
           // TODO get decimals from token info
           var decimals = 18;
-          amount = new BigNumber(amount);
+          var amount = new BigNumber(authAmount);
 
-          if(amount < 0){
+          if(amount < 0  || authAmount === ''){
             toastBot.showToast('warning', "您输入的数量有误, 请重新输入!");
             return;
           }
@@ -1272,12 +1287,12 @@
 
       function pop(){
         if (checkNASWallet()) {
-          var amount = $("#popAmount").val();
+          var popAmount = $("#popAmount").val();
           // TODO get decimals from token info
           var decimals = 18;
-          amount = new BigNumber(amount);
+          var amount = new BigNumber(popAmount);
 
-          if(amount < 0){
+          if(amount < 0 || popAmount === ''){
             toastBot.showToast('warning', "您输入的数量有误, 请重新输入!");
             return;
           }
@@ -1309,8 +1324,9 @@
       function transfer(){
         if (checkNASWallet()) {
           var receiver = $("#receiverAccount").val();
-          var amount = parseFloat($("#transferAmount").val());
-          if(amount < 0){
+          var transferAmount = $("#transferAmount").val();
+          var amount = parseFloat();
+          if(amount < 0 || transferAmount === ''){
             toastBot.showToast('warning', "您输入的数量有误, 请重新输入!");
             return;
           }
@@ -1490,7 +1506,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="token">星星转账</h4>
+          <h4 class="modal-title" id="token">转账</h4>
         </div>
         <div class="modal-body">
           <label>接收地址</label><span class="badge badge-pill badge-light" id="alias"></span>
@@ -1557,15 +1573,14 @@
         </div>
         <div class="modal-footer"  style="padding-top: 10px">
           <br>
-          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closePop()">关闭</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="transferDialog('n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr')">关闭</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
-
   <script>
-    $("#receiverAccount").on('input', function (e) {
+    function getAlaisAccount(){
       var receiver = $("#receiverAccount").val();
       if(!Account.isValidAddress(receiver) && validateAlias(receiver)){
         $("#alias").html('');
@@ -1575,6 +1590,9 @@
         useAlais = false;
         $("#alias").html('')
       }
+    }
+    $("#receiverAccount").on('input', function (e) {
+      getAlaisAccount();
     });
 
     var leaded = localStorage.getItem('leaded') || "0";
