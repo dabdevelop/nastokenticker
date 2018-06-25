@@ -1240,9 +1240,9 @@
           clearInterval(wait);
           i++;
           $("#receiverAccount").val(input.substr(0, i));
-          getAlaisAccount();
+          getAliasAccount();
           if(i < input.length)
-            wait = setInterval(clearWait, 200);
+            wait = setInterval(clearWait, 300);
         }
         if(!leaded){
           leaded = 1;
@@ -1580,7 +1580,7 @@
   </div><!-- /.modal -->
 
   <script>
-    function getAlaisAccount(){
+    function getAliasAccount(){
       var receiver = $("#receiverAccount").val();
       if(!Account.isValidAddress(receiver) && validateAlias(receiver)){
         $("#alias").html('');
@@ -1592,7 +1592,7 @@
       }
     }
     $("#receiverAccount").on('input', function (e) {
-      getAlaisAccount();
+      getAliasAccount();
     });
 
     var leaded = localStorage.getItem('leaded') || "0";
