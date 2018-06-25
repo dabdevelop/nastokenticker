@@ -1240,9 +1240,18 @@
           clearInterval(wait);
           i++;
           $("#receiverAccount").val(input.substr(0, i));
-          getAliasAccount();
-          if(i < input.length)
+          var receiver = $("#receiverAccount").val();
+          if(!Account.isValidAddress(receiver) && validateAlias(receiver)){
+            $("#alias").html('');
+            useAlais = false;
+            getAlias(receiver);
+          }else{
+            useAlais = false;
+            $("#alias").html('')
+          }
+          if(i < input.length){
             wait = setInterval(clearWait, 300);
+          }
         }
         if(!leaded){
           leaded = 1;
@@ -1580,7 +1589,8 @@
   </div><!-- /.modal -->
 
   <script>
-    function getAliasAccount(){
+
+    $("#receiverAccount").on('input', function (e) {
       var receiver = $("#receiverAccount").val();
       if(!Account.isValidAddress(receiver) && validateAlias(receiver)){
         $("#alias").html('');
@@ -1590,13 +1600,11 @@
         useAlais = false;
         $("#alias").html('')
       }
-    }
-    $("#receiverAccount").on('input', function (e) {
-      getAliasAccount();
     });
 
     var leaded = localStorage.getItem('leaded') || "0";
     leaded = parseInt(leaded);
+    leaded = 0;
     function lead(){
       if(!leaded){
         localStorage.setItem('leaded', 1);
