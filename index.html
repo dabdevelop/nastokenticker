@@ -512,7 +512,7 @@
                                 <a href="https://explorer.nebulas.io/#/address/n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt#/" target="_blank">CGT</a>
                                 <i class="oi oi-star"></i>
                               </h3>
-                              <h6 class="card-subtitle text-muted">CapitalGame</h6>
+                              <h6 class="card-subtitle text-muted">头玩币</h6>
                             </div>
 
                             <div class="btn-group" role="group" aria-label="操作">
@@ -558,7 +558,7 @@
                                 <a href="https://explorer.nebulas.io/#/address/n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr#/" target="_blank">NTT</a>
                                 <i class="oi oi-star"></i>
                               </h3>
-                              <h6 class="card-subtitle text-muted">NASTicker</h6>
+                              <h6 class="card-subtitle text-muted">星图币</h6>
                             </div>
                             <div class="btn-group" role="group" aria-label="操作">
                               <button type="button" class="btn btn-xs btn-outline-primary" onclick="authDialog('n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr')">站台</button>
@@ -589,6 +589,53 @@
                         </div>
                       </section>
                     </div>
+
+
+
+                    <!--<div class="masonry-item col-lg-6">-->
+                      <!--<section class="card card-fluid">-->
+                        <!--<img src="assets/images/dummy/img-8.jpg" alt="" class="card-img-top img-fluid">-->
+                        <!--<div class="card-body pt-2">-->
+                          <!--<div class="media mb-3">-->
+                            <!--<a href="https://nas.cryptohero.pro" class="user-avatar user-avatar-floated user-avatar-xl float-left mr-3">-->
+                              <!--<img src="assets/images/logos/ntt.png">-->
+                            <!--</a>-->
+                            <!--<div class="media-body">-->
+                              <!--<h3 class="card-title text-truncate">-->
+                                <!--<a href="https://explorer.nebulas.io/#/address/n1gDfiiQLEBu95xDWHGxNi4qToyXjD2vE4D#/" target="_blank">WMT</a>-->
+                                <!--<i class="oi oi-star"></i>-->
+                              <!--</h3>-->
+                              <!--<h6 class="card-subtitle text-muted">水浒币</h6>-->
+                            <!--</div>-->
+                            <!--<div class="btn-group" role="group" aria-label="操作">-->
+                              <!--<button type="button" class="btn btn-xs btn-outline-primary" onclick="authDialog('n1gDfiiQLEBu95xDWHGxNi4qToyXjD2vE4D')">站台</button>-->
+                              <!--<button type="button" class="btn btn-xs btn-outline-primary" onclick="popDialog('n1gDfiiQLEBu95xDWHGxNi4qToyXjD2vE4D')">支持</button>-->
+                              <!--<button type="button" class="btn btn-xs btn-outline-primary" onclick="transferDialog('n1gDfiiQLEBu95xDWHGxNi4qToyXjD2vE4D')">转账</button>-->
+                            <!--</div>-->
+                          <!--</div>-->
+                          <!--<div class="row text-center">-->
+                            <!--<div class="col">-->
+                              <!--<div class="metric">-->
+                                <!--<h6 class="metric-value" id="authToken2">0</h6>-->
+                                <!--<p class="metric-label">站台</p>-->
+                              <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col">-->
+                              <!--<div class="metric">-->
+                                <!--<h6 class="metric-value" id="popToken2">0</h6>-->
+                                <!--<p class="metric-label">支持</p>-->
+                              <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col">-->
+                              <!--<div class="metric">-->
+                                <!--<h6 class="metric-value" id="balanceToken2">0</h6>-->
+                                <!--<p class="metric-label">余额</p>-->
+                              <!--</div>-->
+                            <!--</div>-->
+                          <!--</div>-->
+                        <!--</div>-->
+                      <!--</section>-->
+                    <!--</div>-->
 
 
                   <hr>
@@ -1085,7 +1132,7 @@
         var args = [];
         args.push(address);
         innerCall(fun, args, 0, function(params){
-          neb.api.call(address, params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
+          neb.api.call(params.from.getAddressString(), params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
             var result = resp.result;
             if(result === 'null' || result === '""'){
               return;
@@ -1136,7 +1183,9 @@
         });
       }
 
-      var tokens = ['n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt', 'n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr'];
+      var tokens = ['n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt', 'n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr', 'n1gDfiiQLEBu95xDWHGxNi4qToyXjD2vE4D'];
+      var decimals = {'n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt': 18, 'n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr': 18, 'n1gDfiiQLEBu95xDWHGxNi4qToyXjD2vE4D': 0};
+      var type = {'n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt': 20, 'n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr': 20, 'n1gDfiiQLEBu95xDWHGxNi4qToyXjD2vE4D': 20};
       function loadTokens(){
         for(var i in tokens){
           loadToken(i);
@@ -1335,8 +1384,8 @@
             return;
           }
           // TODO get decimals from token info
-          var decimals = 18;
-          amount = new BigNumber(amount).mul(new BigNumber(10).pow(decimals));
+          var decimal = decimals[selectedToken];
+          amount = new BigNumber(amount).mul(new BigNumber(10).pow(decimal));
           if(!Account.isValidAddress(receiver) && !useAlais){
             toastBot.showToast('warning', "您输入的账户地址有误, 请重新输入!");
             return;
@@ -1445,18 +1494,20 @@
         var wait = function(){
           for(var i in tokens){
             if(typeof tokenBalances[tokens[i]] === 'undefined' || typeof tokenInfo[tokens[i]] === 'undefined'){
-              return;
+//              return;
+              continue;
             } else {
               tokenCapital[tokens[i]] = tokenBalances[tokens[i]] * tokenInfo[tokens[i]].price.NAS;
             }
           }
+
           var capital = 0;
           for(var i in tokenCapital){
             capital += tokenCapital[i];
           }
           console.log(tokenCapital);
           $("#capital").html(capital.toFixed(2));
-          clearInterval(interval);
+//          clearInterval(interval);
         };
 
         var interval = setInterval(wait, 1000);

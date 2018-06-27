@@ -242,3 +242,5 @@ function randomStr() {
 
 var BigNumber = require('bignumber.js');
 
+console.log(new BigNumber('-Infinity').isFinite());
+

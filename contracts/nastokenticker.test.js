@@ -13,10 +13,10 @@ var BigNumber = require('bignumber.js');
 
 var neb = new Nebulas.Neb();
 //neb.setRequest(new Nebulas.HttpRequest("http://localhost:8685"));
-neb.setRequest(new Nebulas.HttpRequest("https://mainnet.nebulas.io"));
-//neb.setRequest(new Nebulas.HttpRequest("https://testnet.nebulas.io"));
-var chainID = 1;
-//var chainID = 1001;
+//neb.setRequest(new Nebulas.HttpRequest("https://mainnet.nebulas.io"));
+neb.setRequest(new Nebulas.HttpRequest("https://testnet.nebulas.io"));
+//var chainID = 1;
+var chainID = 1001;
 
 // n1aedmxzq8XBb3TUgPE6ms556h5ymCkrtu2
 var sourceAccount = new Account("4aaf873707f925a286a89e74cd809cbaff3ddb325ea40338e2d96c4dd2b056f4");
@@ -56,13 +56,14 @@ var usePlayer = false;
 //testSubmitToken("n1aedmxzq8XBb3TUgPE6ms556h5ymCkrtu2", 20);
 
 //testSubmitTokenRaw("n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", 20, 'CapitalGameToken', "CGT", 18, 268744.8254095);
+testSubmitTokenRaw("n1gDfiiQLEBu95xDWHGxNi4qToyXjD2vE4D", 20, 'CryptoHeroShare', "CHS", 1, 100000);
 //testSubmitTokenRaw("n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr", 20, 'NASTickerToken', "NTT", 18, 100000000);
 
 //testSubmitBalanceRaw("n1aedmxzq8XBb3TUgPE6ms556h5ymCkrtu2", "n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", 0.01);
 //testSubmitBalanceRaw("n1MMHWF3BFhhHcSbiPMJgqzL8YYRsS4M27S", "n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", 101.66);
 //testSubmitBalanceRaw("n1xjLawUUw3A5bwgkQYvhCkbVPztKCEawvD", "n1xjLawUUw3A5bwgkQYvhCkbVPztKCEawvD", 2);
 
-testUpdateTokenPrice("n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", {NAS: 0.02471});
+//testUpdateTokenPrice("n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", {NAS: 0.02471});
 
 
 //testSetToken("n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt", "", true, {website: 'https://cgplayerone.com/', email: 'ft.nudt@gmail.com'}, {});
@@ -119,7 +120,8 @@ function testSubmitTokenRaw(_address, _type, _name, _symbol, _decimals, _totalSu
     args.push(_symbol);
     args.push(_decimals);
     args.push(_totalSupply);
-    call(fun, args, 0, function(){});
+    console.log(JSON.stringify(args));
+    //call(fun, args, 0, function(){});
 }
 
 function testSubmitBalanceRaw(_account, _address, _balance){
