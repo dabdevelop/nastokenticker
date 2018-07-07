@@ -41,6 +41,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/nebulas@0.5.2/dist/nebulas.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/nebulasio/nebPay@60c65f8a7e26015bb31c56d56f3a638a33ea3c8e/dist/nebPay.min.js"></script>
+    <script src="assets/javascript/blockies.min.js"></script>
+    <script src="assets/javascript/hqx.js"></script>
     <script src="assets/javascript/mustache.min.js"></script>
     <script src="assets/javascript/bignumber.min.js"></script>
     <script src="assets/javascript/config.js"></script>
@@ -220,7 +222,8 @@
               <div class="dropdown">
                 <button class="btn-account d-none d-md-flex" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="user-avatar">
-                    <img src="assets/images/avatars/uifaces0.jpg" alt="" class="avatarImg">
+                    <!-- <img src="assets/images/avatars/uifaces0.jpg" alt="" class="avatarImg"> -->
+                    <img id="roundIcon" class="avatarImg">
                   </span>
                   <span class="account-summary pr-lg-4 d-none d-lg-block">
                     <span class="account-name user-name">星图用户 #</span>
@@ -266,7 +269,8 @@
             <!-- .btn-account -->
             <button class="btn-account d-flex d-md-none" type="button" data-toggle="collapse" data-target="#dropdown-aside">
               <span class="user-avatar user-avatar-lg">
-                <img src="assets/images/avatars/uifaces0.jpg" alt="" class="avatarImg">
+                <!-- <img src="assets/images/avatars/uifaces0.jpg" alt="" class="avatarImg"> -->
+                <img id="roundIcon" class="avatarImg">
               </span>
               <span class="account-icon">
                 <span class="fa fa-caret-down fa-lg"></span>
@@ -392,6 +396,9 @@
                   <ul class="menu">
                     <li class="menu-item">
                       <a href="https://nas.me" target="_blank" class="menu-link">地址代号NAS.ME</a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="http://nasid.pro/" target="_blank" class="menu-link">NasId</a>
                     </li>
                     <li class="menu-item">
                       <a href="https://github.com/dabdevelop/nastokenticker" target="_blank" class="menu-link">项目GitHub源码</a>
@@ -1032,12 +1039,12 @@
                             var holder = JSON.parse(result);
                             if(holder.account !== ''){
                               if(holder.holderId >= 0){
-                                $(".avatarImg").prop('src', "assets/images/avatars/uifaces" + holder.holderId % 20 + ".jpg");
+                                // $(".avatarImg").prop('src', "assets/images/avatars/uifaces" + holder.holderId % 20 + ".jpg");
                                 $(".user-name").html('星图用户 #' + holder.holderId);
                                 //TODO calculate captital
 //                                $("#capital").html(0);
                               } else{
-                                $(".avatarImg").prop('src', "assets/images/avatars/uifaces0.jpg");
+                                // $(".avatarImg").prop('src', "assets/images/avatars/uifaces0.jpg");
                                 $(".user-name").html('新用户');
                               }
 
@@ -1526,8 +1533,12 @@
       load();
 //      var interval;
 
-
-
+      var roundIcon = document.getElementById('roundIcon');
+      if(Account.isValidAddress(address)){
+        roundIcon.style.backgroundImage = 'url(' + hqx(blockies.create({ seed:address ,size: 8,scale: 1}),4).toDataURL()+')';
+      } else {
+        roundIcon.style.backgroundImage = 'url(' + hqx(blockies.create({ seed:dappAddress ,size: 8,scale: 1}),4).toDataURL()+')';
+      }
 
     </script>
   </body>
