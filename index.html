@@ -40,7 +40,7 @@
     <script src="assets/vendor/pace/pace.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/nebulas@0.5.2/dist/nebulas.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/nebulasio/nebPay@60c65f8a7e26015bb31c56d56f3a638a33ea3c8e/dist/nebPay.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nebpay.js@0.2.1/dist/nebPay.min.js"></script>
     <script src="assets/javascript/blockies.min.js"></script>
     <script src="assets/javascript/hqx.js"></script>
     <script src="assets/javascript/mustache.min.js"></script>
@@ -726,6 +726,8 @@
 
       var needCheckNASWallet = localStorage.getItem('needCheckNASWallet') || '1';
       needCheckNASWallet = parseInt(needCheckNASWallet);
+      var hasNASNano = localStorage.getItem('hasNASNano') || '0';
+      hasNASNano = parseInt(hasNASNano);
       var invoker = null;
 
       function checkNASWallet(_invoker) {
@@ -840,6 +842,8 @@
       function refresh(){
         toastBot.showToast('info', "交易数据将在几秒内自动更新");
         address = localStorage.getItem('address') || '';
+        hasNASNano = localStorage.getItem('hasNASNano') || '0';
+        hasNASNano = parseInt(hasNASNano);
         load();
       }
 
@@ -898,40 +902,47 @@
         innerCall(fun, args, value, function (params) {
           serialNumber = nebPay.call(params.to, params.value, params.contract.function, params.contract.args, {
             qrcode: {
-              showQRCode: false
+              showQRCode: !checkWallet() && !window.mobileAndTabletcheck(),      //是否显示二维码信息
+              container: undefined,    //指定显示二维码的canvas容器，不指定则生成一个默认canvas
+              completeTip: undefined, // 完成支付提示
+              cancelTip: undefined // 取消支付提示
             },
-            callback:"https://pay.nebulas.io/api/mainnet/pay",
-            listener: function (resp) {
-              if(window.mobileAndTabletcheck()){
-                if(!inQuery){
-                  inQuery = true;
-                  retryQueryTime = 10;
-                  toastBot.showToast('info', "正在查询交易状态!");
-                  intervalQuery = setInterval(function () {
-                    recheckMobileTransactionReceipt(serialNumber, function(resp){
-                      if(resp.status == 1){
-                        toastBot.showToast('success', "交易成功!");
-                        callback && callback(resp);
-                      } else if(resp.status == 0){
-                        toastBot.showToast('error', "交易失败! 错误提示: " + resp.execute_error);
-                        wait = setInterval(clearWait, 2000);
-                      }
-                    });
-                  }, 5000);
+            mobile: {
+              showInstallTip: !hasNASNano, //是否支持手机钱包安装提示
+              installTip: undefined // 手机钱包安装提示
+            },
+            gasLimit: 2000000, //2000000
+            callback: NebPay.config.mainnetUrl, //主网
+            listener: function (serialNumber, resp) {
+              if (resp === 'Error: Transaction rejected by user' || resp == false) {
+                toastBot.showToast('warning', "您已取消!");
+              } else {
+                if(window.mobileAndTabletcheck() || !checkWallet()){
+                  if(!inQuery){
+                    inQuery = true;
+                    retryQueryTime = 10;
+                    toastBot.showToast('info', "正在查询交易状态!");
+                    intervalQuery = setInterval(function () {
+                      recheckMobileTransactionReceipt(serialNumber, function(resp){
+                        if(resp.status == 1){
+                          toastBot.showToast('success', "交易成功!");
+                          callback && callback(resp);
+                        } else if(resp.status == 0){
+                          toastBot.showToast('error', "交易失败! 错误提示: " + resp.execute_error);
+                          wait = setInterval(clearWait, 2000);
+                        }
+                      });
+                    }, 5000);
+                  }
+                  return;
                 }
-                return;
-              }
-              if (resp !== 'Error: Transaction rejected by user') {
                 toastBot.showToast('info', "交易已提交, 正在为您查询交易状态, 请等待约15秒钟!");
                 var hash = resp.txhash;
                 recheckTransactionReceipt(hash, function (resp) {
                   toastBot.showToast('success', "交易成功!");
                   callback && callback(resp);
                 })
-              } else {
-                toastBot.showToast('warning', "您已取消!");
               }
-
             }
           });
 
@@ -1331,6 +1342,7 @@
           closeAuth();
           callNebPay(fun, args, 0, function (resp) {
             localStorage.setItem('address', resp.from);
+            localStorage.setItem('hasNASNano', 1);
             var wait;
             function clearWait() {
               clearInterval(wait);
@@ -1366,6 +1378,7 @@
           closePop();
           callNebPay(fun, args, 0, function (resp) {
             localStorage.setItem('address', resp.from);
+            localStorage.setItem('hasNASNano', 1);
             var wait;
             function clearWait() {
               clearInterval(wait);
@@ -1406,6 +1419,7 @@
           closeTransfer();
           callNebPay(fun, args, 0, function (resp) {
             localStorage.setItem('address', resp.from);
+            localStorage.setItem('hasNASNano', 1);
             var wait;
             function clearWait() {
               clearInterval(wait);
@@ -1480,6 +1494,7 @@
             var args = [];
             callNebPay(fun, args, 0, function (resp) {
               localStorage.setItem('address', resp.from);
+              localStorage.setItem('hasNASNano', 1);
               var wait;
               function clearWait() {
                 clearInterval(wait);
