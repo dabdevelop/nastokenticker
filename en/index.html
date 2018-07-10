@@ -1330,7 +1330,7 @@
           var amount = new BigNumber(authAmount);
 
           if(amount < 0  || authAmount === ''){
-            toastBot.showToast('warning', "The amount is wrong, please input agiain!");
+            toastBot.showToast('warning', "The amount is wrong, please input again!");
             return;
           }
 
@@ -1366,7 +1366,7 @@
           var amount = new BigNumber(popAmount);
 
           if(amount < 0 || popAmount === ''){
-            toastBot.showToast('warning', "The amount is wrong, please input agiain!");
+            toastBot.showToast('warning', "The amount is wrong, please input again!");
             return;
           }
 
@@ -1401,7 +1401,7 @@
           var transferAmount = $("#transferAmount").val();
           var amount = parseFloat(transferAmount);
           if(amount < 0 || transferAmount === ''){
-            toastBot.showToast('warning', "The amount is wrong, please input agiain!");
+            toastBot.showToast('warning', "The amount is wrong, please input again!");
             return;
           }
           if(amount > parseFloat(tokenBalances[selectedToken])){
@@ -1412,7 +1412,7 @@
           var decimal = decimals[selectedToken];
           amount = new BigNumber(amount).mul(new BigNumber(10).pow(decimal));
           if(!Account.isValidAddress(receiver) && !useAlais){
-            toastBot.showToast('warning', "The account address is wrong, please input agiain!");
+            toastBot.showToast('warning', "The account address is wrong, please input again!");
             return;
           }
           if(useAlais) receiver = $("#alias").html();
@@ -1485,7 +1485,7 @@
           $("#form-login").modal('hide');
           toastBot.showToast('success', "Login succeed!");
         } else{
-          toastBot.showToast('warning', "The account address is wrong, please try agiain!");
+          toastBot.showToast('warning', "The account address is wrong, please try again!");
         }
       }
 
@@ -1594,7 +1594,7 @@
         <div class="modal-body">
           <label>Receive address</label><span class="badge badge-pill badge-light" id="alias"></span>
           <input type="text" class="form-control input-sm" id="receiverAccount" placeholder="NAS address or nas.me alias">
-          <label>amount</label>
+          <label>Amount</label>
           <input type="number" class="form-control input-sm" id="transferAmount">
         </div>
         <div class="modal-footer"  style="padding-top: 10px">
