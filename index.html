@@ -62,6 +62,30 @@
     <link rel="stylesheet" href="assets/stylesheets/custom.css">
     <!-- END THEME STYLES -->
 
+    <script>
+      function getBrowserLang(){
+        if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
+          return undefined;
+        }
+        let browserLang = window.navigator.languages ? window.navigator.languages[0] : null;
+        browserLang = browserLang || window.navigator.language || window.navigator.browserLanguage || window.navigator.userLanguage;
+        if (browserLang.indexOf('-') !== -1) {
+          browserLang = browserLang.split('-')[0];
+        }
+        if (browserLang.indexOf('_') !== -1) {
+          browserLang = browserLang.split('_')[0];
+        }
+        return browserLang;
+      }
+
+      var lang = localStorage.getItem('lang') || '';
+      if(window.location.search.match('lang=zh')){
+        localStorage.setItem('lang', 'zh');
+      }
+      if(!window.location.search.match('lang=zh') && getBrowserLang() != 'zh' && lang != 'zh'){
+        window.location = 'en/index.html?lang=en'
+      }
+    </script>
   </head>
   <body>
     <!-- .app -->
@@ -118,7 +142,7 @@
               <!-- .nav -->
               <ul class="header-nav nav">
                 <li class="nav-item dropdown header-nav-dropdown">
-                  <a href="en/index.html" class="nav-link" aria-haspopup="false" aria-expanded="false">
+                  <a href="en/index.html?lang=en" class="nav-link" aria-haspopup="false" aria-expanded="false">
                     <span>English</span>
                   </a>
                 </li>

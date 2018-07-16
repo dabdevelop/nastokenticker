@@ -62,6 +62,11 @@
     <link rel="stylesheet" href="../assets/stylesheets/custom.css">
     <!-- END THEME STYLES -->
 
+    <script>
+      if(window.location.search.match('lang=en')){
+        localStorage.setItem('lang', 'en');
+      }
+    </script>
   </head>
   <body>
     <!-- .app -->
@@ -118,7 +123,7 @@
               <!-- .nav -->
               <ul class="header-nav nav">
                 <li class="nav-item dropdown header-nav-dropdown">
-                  <a href="../index.html" class="nav-link" aria-haspopup="false" aria-expanded="false">
+                  <a href="../index.html?lang=zh" class="nav-link" aria-haspopup="false" aria-expanded="false">
                     <span>中文</span>
                   </a>
                 </li>
